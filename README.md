@@ -2,10 +2,21 @@
 ## _An In-Terminal Snake Game Made with Embedded Programming_
 
 ### Summary
-    ARM Snake is the result of the final project (Exercise 12) for CMPE - 250 Assembly and Embedded Programming course provided at Rochester Institute of Technology. The program was created to be embedded on a FRDM board with a KL46z Central Processing Unit (CPU). The game will run in a terminal provided by a Serial COM port and the PuTTY application.
+    ARM Snake is the result of the final project (Exercise 12) for CMPE - 250
+    Assembly and Embedded Programming course provided at Rochester Institute 
+    of Technology. The program was created to be embedded on a FRDM board with 
+    a KL46z Central Processing Unit (CPU). The game will run in a terminal 
+    provided by a Serial COM port and the PuTTY application.
 
 # Development
-    In the development process our development team created a high-level pseudo-code in oder to flush out the functions/subroutines needed to achieve the desired functionality. The development process began by creating shells for these functions/subroutines that consisted of a commented header describing the parameters and return value(s) for each. For this the desired programming was created. Any additional solution code was added to fix any bugs or fatal issues that occured.
+    In the development process our development team created a high-level 
+    pseudo-code in oder to flush out the functions/subroutines needed to 
+    achieve the desired functionality. The development process began by creating 
+    shells for these functions/subroutines that consisted of a commented header 
+    describing the parameters and return value(s) for each. For this the desired 
+    programming was created. Any additional solution code was added to fix any 
+    bugs or fatal issues that occured.
+
 ## Developers
 - _Gabriel Dombrowski_
 - _AngelHudak_
