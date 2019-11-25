@@ -25,26 +25,26 @@
 ![Snake State Diagram](ARMC99_Snake_StateDiagram.png)
 
 ### C99 Functions Porgress Checklist
-[ ] void main(int [ ])
-[ ] void spawnFood( )
-[ ] int isGameOver( )
-[ ] void putChar(int x, int y)
-[ ] void advanceTheSnake( )
+- [ ] void main(int [ ])
+- [ ] void spawnFood( )
+- [ ] int isGameOver( )
+- [ ] void putChar(int x, int y)
+- [ ] void advanceTheSnake( )
 
 ### ARM Assembly Subroutines Porgress Checklist
-[ ] Init_Snake_Game
-[x] Init_Queue
-[x] Dequeue
-[x] Enqueue
-[ ] Init_PIT_IRQ
-[ ] PIT_IRQHandler
-[ ] Init_UART0_IRQ
-[ ] UART0_IRQHandler
-[x] GetCharI
-[x] PutCharI
-[x] PutStringI
-[x] NewLineI
-[ ] ReadSnakeQueues
+- [ ] Init_Snake_Game
+- [x] Init_Queue
+- [x] Dequeue
+- [x] Enqueue
+- [ ] Init_PIT_IRQ
+- [ ] PIT_IRQHandler
+- [ ] Init_UART0_IRQ
+- [ ] UART0_IRQHandler
+- [x] GetCharI
+- [x] PutCharI
+- [x] PutStringI
+- [x] NewLineI
+- [ ] ReadSnakeQueues
 
 ## Enhancements
     Appart from the Minimum Viable Product our development team is working on adding the following enhancements to ARM and C99 Snake
