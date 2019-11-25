@@ -22,7 +22,7 @@
 5. When the game ends the prgram will disable all game state variables, display either __"GAMEOVER"__ or __"YOU WIN!"__, prompt the player to press the >enter< key to rest the program, and wait for a CR character.
 6. The program will clear the terminal and move the cursor back to its origonal position using escape sequences, then start over from step one.
 
-![Snake State Diagram](ARM/C99_Snake_StateDiagram.PNG)
+![Snake State Diagram](ARMC99_Snake_StateDiagram.PNG)
 
 ### C99 Functions Porgress Checklist
 [ ] void main(int [ ])
