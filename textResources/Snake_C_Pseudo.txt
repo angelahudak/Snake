@@ -1,0 +1,105 @@
+/*********************************************************************/
+/* Snake with KL46z FRDM board with mixed ARM Assembly and C99       */
+/* Name:  Gabriel Dombrowski & Angela Hudak                          */
+/* Date:  2, December 2019                                           */
+/* Class:  CMPE 250                                                  */
+/* Section:  Teusdays 1400 L2                                        */
+/*-------------------------------------------------------------------*/
+/*********************************************************************/
+/*Defines*/
+#include "MKL46Z4.h"
+#include "Exercise11_C.h"
+
+#define FALSE      (0)
+#define TRUE       (1)
+#define MAX_STRING (79)
+#define GAME_OVER;
+#deinfe REFRESH_SCREEN;
+#define velcoity;
+/*********************************************************************/
+/*Support C Functions */
+
+/*
+*moveSnake - gets the value of the current velocity and prints a snake
+*           char in that direction from the current head location.
+*           It then enqueues that value to the snake queue. If
+*           nextSpace == food, it exits. If nextSpace == ' ' it
+*           dequeus a snake char from the snake queue and prints a ' '
+*           at the coordinate.
+*@params-null
+*@return-null
+*/
+void moveSnake(){
+    }
+
+/*
+*spawnFood - prints a food charater ata random empty space on the game
+*            baord
+*@params - null
+*@return - null
+*/
+void spawnFood(){
+    }
+
+/*
+*checkGameLost - if nextSpace == snake or boarder, then GAME_OVER = 1
+*@params - null
+*@return - int (bool 1=True, 0=False)
+*/
+int checkGameLost(){
+    }
+
+/*
+*gameWon - 
+*
+*/
+int gameWon(){
+    }
+
+/*
+*advanceTheSnake - uses the velocity variable to advance the snake to the
+*			nextSpace coordinates. Will delete the tail only if
+*			nextSpace coordinates != food coordinates
+*@params - null
+*@return - null
+*/
+void advanceTheSnake(){
+}
+/*
+*writeChar - writes a character to the coordinates of the parameters 
+*		using escape sequences
+*Input - char c, int x, int y
+*Output - null
+*/
+void writeChar(char c, int x, int y){
+}
+
+/*
+*spawnFood - spawns a food char at a random coordinate that is not currently
+*snake and updates the foodX and foodY variables
+*inputs - null
+*outputs - null
+*/
+Void spawnFood(){
+}
+/*********************************************************************/
+/*Main C Function */
+int main (void){
+    //initialize interrupts in critial region
+    __asm(CPSID I);
+    Init_UARt0_IRQ
+    Init_PIT_IRQ
+    __asm(CPSIE I);
+
+    //present user instructions for PuTTy
+    for (;;){/*main loop*/
+    //prompt user for <enter> key
+
+    while (GAME_OVER == 0){/*game loop*/
+        //print board
+        //enable REFRESH_SCREEN
+        }
+    }
+    return (0);
+    }
+/*********************************************************************/
