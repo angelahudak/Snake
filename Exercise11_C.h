@@ -21,6 +21,9 @@ typedef unsigned char UInt8;
 /*assembly variables*/
 extern char Velocity;
 extern int GameActive;
+extern int GameOver;
+extern int GameWon;
+extern int GameLost;
 
 /* assembly language subroutines */
 char GetCharI (void);
@@ -31,7 +34,8 @@ void PutNumHexI (UInt32);
 void PutNumI (UInt8);
 void PutStringI (char String[], int StringBufferCapacity);
 void NewLineI (void);
-int Dequeue(UInt32);
+int  Dequeue(UInt32);
 void Enqueue(Int8, UInt32);
 Int8 ReadSnakeQ(Int8, UInt32);
 Int8 ReadFirstQ(UInt32);
+void InitSnakeQs();

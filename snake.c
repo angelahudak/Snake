@@ -19,9 +19,14 @@
 #define MAX_STRING (79)
 #define REFRESH_SCREEN
 /*********************************************************************/
-/*Support C Functions */
 /*Global variables*/
-int GAME_OVER;
+//ARM Global variables
+extern GameOver;
+extern Velocity;
+extern GameLost;
+extern GameWon;
+
+//C Global variables
 int nextX;
 int nextY;
 int foodX;
@@ -31,7 +36,6 @@ int headY;
 int tailX;
 int tailY;
 int snakeLength = 3;
-extern Velocity;
 
 //values for boarders
 int upperLimitX = 49;
@@ -43,6 +47,15 @@ int lowerLimitY = 3;
 char FOOD = 'O';
 char SNAKE = '#';
 char WALL = 'X';
+char NOTHING = ' ';
+
+/*
+setDifficulty - sets the difficulty of the game to 1, 2, or 3
+@params - int difficulty
+@return(s) - null void
+*/
+void setDifficulty(int difficulty){
+}
 
 /*
 printChar -  moves the cursor to the x,y positions
@@ -59,9 +72,9 @@ void printChar(char C, int x, int y){
 	PutStringI("\033[s", MAX_STRING);
 	
 	PutStringI("\033[<", MAX_STRING);
-	PutCharI(x + 39);
+	PutCharI(x + 49);
 	PutStringI(">;<", MAX_STRING);
-	PutCharI(y + 39);
+	PutCharI(y + 49);
 	PutStringI(">f\b", MAX_STRING);
 	PutCharI(C);
 	
@@ -104,12 +117,24 @@ void spawnFood(){
 	printChar(foodValid, foodX, foodY);
 }
 
+/*
+enqueueNewSnakePos - enqueues the headX and headY values into the
+	snake queues
+@params - null
+@return(s) - null void
+*/
 void enqueueNewSnakePos(){
 	Enqueue(headY, &snakeQYRecord);
 	Enqueue(headX, &snakeQXRecord);	
 }
 
-
+/*
+nextSpaceValid - tells if the next space will be valid
+	given a velocity char, will also increment the nextX or
+	nextY value accordingly
+@params - char v (velocity)
+@returns - null void
+*/
 int nextSpaceValid(char v){
 	//velocity is up
 	if (v = 'w'){
@@ -184,9 +209,15 @@ void advanceTheSnake(char vel){
 			printChar(SNAKE, headX, headY);
 			break;
 	}
+	//only adavnce the tail if no food is eaten
 	if (!(nextX == foodX && nextY == foodY){
-		
+		printChar(NOTHING, tailX, tailY);
+		Dequeue(&SnakeQXRecord);
+		Dequeue(&SnakeQYRecord);
+		tailX = ReadFirstQ(&SnakeQXRecord);
+		tailY = ReadFirstQ(&SnakeQYRecord);
 	}
+	else if (nextX == foodX && nextY == foodY) {SnkaeLength ++;}
 }
 
 /*********************************************************************/
@@ -195,7 +226,7 @@ int main (void){
     //initialize interrupts in critial region
     __asm("CPSID I");
     Init_UART0_IRQ();
-    //Init_PIT_IRQ
+    Init_PIT_IRQ();
     __asm("CPSIE I");
 
     //present user instructions for PuTTy
@@ -205,38 +236,45 @@ int main (void){
 			GAME_OVER = TRUE;
 			
 			//prompt user for <enter> key
-			PutStringI("Please edit you PuTTy Terminal Settings:", MAX_STRING);										//row 21
-			NewLineI();
-			PutStringI("Right-Click/Change Settings.../Terminal/Force Off x2", MAX_STRING);				//row 20
-			NewLineI();
-			PutStringI("Press the <enter> key to play Snake", MAX_STRING);												//row 19
-			NewLineI();
+			PutStringI("Please edit you PuTTy Terminal Settings:\n", MAX_STRING);										//row 22
+			PutStringI("Right-Click/Change Settings.../Terminal/Force Off x2\n", MAX_STRING);				//row 21
+	    
+			//difficulty computation
+			PutStringI("Press >1< >2< or >3< to slect your difficulty", MAX_STRING);								//row 20
+			while (!(userInput == '1' || userInput == '2' || userInput == '3')){
+				userInput = GetCharI();
+			}
+			setDifficulty(userInput - 48);
 			
+			//wait for user >enter< loop
+			PutStringI("Press the <enter> key to play Snake\n", MAX_STRING);												//row 19			
 			while (!(userInput == 0x0D)){
 				userInput = GetCharI();
 			}
 			//print board
 			//starting snake coordinates
 			//Column:   0123456789...
-			PutStringI("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/n", MAX_STRING); 			//row 18
-			PutStringI("X                                                X/n", MAX_STRING); 			//row 17
-			PutStringI("X                                                X/n", MAX_STRING); 			//row 16
-			PutStringI("X                                                X/n", MAX_STRING); 			//row 15
-			PutStringI("X                                                X/n", MAX_STRING); 			//row 14
-			PutStringI("X                                                X/n", MAX_STRING); 			//row 13
-			PutStringI("X                                                X/n", MAX_STRING); 			//row 12
-			PutStringI("X                                                X/n", MAX_STRING); 			//row 11
-			PutStringI("X              ###                    O          X/n", MAX_STRING); 			//row 10
-			PutStringI("X                                                X/n", MAX_STRING); 			//row 9
-			PutStringI("X                                                X/n", MAX_STRING); 			//row 8
-			PutStringI("X                                                X/n", MAX_STRING); 			//row 7
-			PutStringI("X                                                X/n", MAX_STRING); 			//row 6
-			PutStringI("X                                                X/n", MAX_STRING); 			//row 5
-			PutStringI("X                                                X/n", MAX_STRING); 			//row 4
-			PutStringI("X                                                X/n", MAX_STRING); 			//row 3
-			PutStringI("X                                                X/n", MAX_STRING); 			//row 2
-			PutStringI("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX/n", MAX_STRING); 			//row 1
-      //set variables
+			PutStringI("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n", MAX_STRING); 			//row 18
+			PutStringI("X                                                X\n", MAX_STRING); 			//row 17
+			PutStringI("X                                                X\n", MAX_STRING); 			//row 16
+			PutStringI("X                                                X\n", MAX_STRING); 			//row 15
+			PutStringI("X                                                X\n", MAX_STRING); 			//row 14
+			PutStringI("X                                                X\n", MAX_STRING); 			//row 13
+			PutStringI("X                                                X\n", MAX_STRING); 			//row 12
+			PutStringI("X                                                X\n", MAX_STRING); 			//row 11
+			PutStringI("X              ###                    O          X\n", MAX_STRING); 			//row 10
+			PutStringI("X                                                X\n", MAX_STRING); 			//row 9
+			PutStringI("X                                                X\n", MAX_STRING); 			//row 8
+			PutStringI("X                                                X\n", MAX_STRING); 			//row 7
+			PutStringI("X                                                X\n", MAX_STRING); 			//row 6
+			PutStringI("X                                                X\n", MAX_STRING); 			//row 5
+			PutStringI("X                                                X\n", MAX_STRING); 			//row 4
+			PutStringI("X                                                X\n", MAX_STRING); 			//row 3
+			PutStringI("X                                                X\n", MAX_STRING); 			//row 2
+			PutStringI("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n", MAX_STRING); 			//row 1
+      //				 |_|<-cursor will return here																								//row 0
+			
+			//set variables
 			Velocity = 'D';
 			foodX = 39;
 			foodY = 10;
@@ -245,16 +283,32 @@ int main (void){
 			tailX = 15;
 			tailY = 10;
 			
-			//enabkle game control booleans
+			//Init queues to record snake values
+			InitSnakeQs();
+			
+			//enqueue back 2 snake x coordinates
+			Enqueue(15, SnakeQXRecord);
+			Enqueue(16, SnakeQXRecord);
+			
+			//enqueue last 2 snake y coordinates
+			Enqueue(10, SnakeQYRecord);
+			Enqueue(10, SnakeQYRecord);
+			
+			//snake first snake head coordinates
+			enqueueNewSnakePos();
+
+			//enable game control booleans
 			GameActive = TRUE;
 			GAME_OVER = FALSE;
-			while (GAME_OVER == FALSE){/*game loop*/
-        GAME_OVER = checkGameLost();
-				GAME_OVER = gameWon();
-        }
-			GameActive = TRUE;
+			
+			//main game loop
+			while (GAME_OVER == FALSE)
+			
+			//enable normal recieving
+			GameActive = FALSE;
+			
 			//game over sequence	
-			if (checkGameLost() == TRUE){
+			if (GameLost == TRUE){
 				//move cursor for new input
 				PutStringI("\033[<21>;<0>",MAX_STRING);
 				//print failure message
@@ -266,8 +320,9 @@ int main (void){
 					userInput = GetCharI();
 				}
 			}
+			
 			//game won sequence
-			if (gameWon() == TRUE){
+			else if (gameWon == TRUE){
 				//move cursor for new input
 				PutStringI("\033[<21>;<0>",MAX_STRING);
 				//print failure message

@@ -86,6 +86,9 @@ CR          EQU  0x0D
 LF          EQU  0x0A
 NULL        EQU  0x00
 ;****************************************************************
+;Snake values
+MAX_SNAKE EQU 864
+;****************************************************************
 ;MACROs
 ;****************************************************************
 ;Program
@@ -106,16 +109,30 @@ NULL        EQU  0x00
             EXPORT  NewLineI
             EXPORT  PutNumI
 			EXPORT	ReadSnakeQ
-			EXPORT ReadFirstQ
+			EXPORT  ReadFirstQ
+			EXPORT	InitSnakeQs
 				
 			;variables
 			EXPORT	GameActive
 			EXPORT	Velocity
+			EXPORT 	GameOver
+			EXPORT	GameWon
+			EXPORT	GameLost
 ;-----------------------------------------------------------------
 			;IMPORTS
 			
 ;-----------------------------------------------------------------
 ;>>>>> begin subroutine code <<<<<
+;################################################################
+;InitSnakeQs - initializes the both X and Y snake queues for the game
+;	Input - null
+;	Output - null
+;################################################################
+InitSnakeQs		PROC	{R0-R13,LR}
+				PUSH	{R0-R3,LR}
+	
+				POP		{R0-R3,PC}
+				ENDP
 ;################################################################
 ;ReadSnakeQ - finds the index value in a queue
 ;Inputs - R0:index
@@ -657,11 +674,22 @@ QTransmitBuffer	SPACE	Q_BUF_SZ
             ALIGN
 QTransmitRecord	SPACE	Q_REC_SZ
 			ALIGN
+SnakeQXRecord	SPACE	Q_REC-SZ
+			ALIGN
+SnakeQXBuffer	SPACE	MAX_SNAKE
+			ALIGN
+SnakeQYRecord	SPACE	Q_REC_SZ
+			ALIGN
+SnakeQYBuffer	SPACE	MAX_SNAKE
+			ALIGN
 ;StackRBuffer	SPACE	STACK_SZ
 ;			ALIGN
 ;StackRRecord	SPACE	STACK_REC_SZ
 Velocity		SPACE	1
 GameActive		SPACE	1
+GameOver		SPACE	1
+GameWon			SPACE	1
+GameLOST		SPACE	1
 			ALIGN
 ;>>>>> begin variables here <<<<<
 ;>>>>>   end variables here <<<<<
