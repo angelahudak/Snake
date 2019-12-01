@@ -37,6 +37,24 @@ int lowerlimitX = 0;
 int upperLimitY = 20;
 int lowerLimitY = 3;
 
+void printChar(char C, int x, int y){
+	//save the cursor pos
+	PutStringI("\033[s", MAX_STRING);
+	
+	PutStringI("\033[<", MAX_STRING);
+	PutCharI(x + 39);
+	PutStringI(">;<", MAX_STRING);
+	PutCharI(y + 39);
+	PutStringI(">f\b", MAX_STRING);
+	PutCharI(C);
+	
+	//restore cursor pos
+	PurtStringI("\033[u", MAX_STRING);
+}
+
+
+
+
 /*
 *moveSnake - gets the value of the current velocity and prints a snake
 *           char in that direction from the current head location.
