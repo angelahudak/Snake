@@ -30,6 +30,7 @@ int headX;
 int headY;
 int tailX;
 int tailY;
+int snakeLength = 3;
 
 //values for boarders
 int upperLimitX = 49;
@@ -37,6 +38,19 @@ int lowerlimitX = 0;
 int upperLimitY = 20;
 int lowerLimitY = 3;
 
+//Print values
+char FOOD = 'O';
+char SNAKE = '#';
+char WALL = 'X';
+
+/*
+printChar -  moves the cursor to the x,y positions
+	given in arguments, deletes the char there and
+	replaces it with an argument. The cursor is returned
+	to its starting position
+@params - char C, int x, int y
+@return(s) - null void
+*/
 void printChar(char C, int x, int y){
 	//save the cursor pos
 	PutStringI("\033[s", MAX_STRING);
@@ -52,29 +66,40 @@ void printChar(char C, int x, int y){
 	PurtStringI("\033[u", MAX_STRING);
 }
 
-
-
+/*
+checkFood - checks a given x,y corrdinate to see if it is a valid
+	placement for a new piece of food.
+@params - int x, int y
+@return(s) - int Boolean (1 = TRUE, 0 = FALSE)
+*/
+int checkFood(int x, int y){
+	for (int i;snakeLength; i++){
+		if (x == readSnakeQ(&SnakeQYRecord, i) && /
+			y == readSnakeQ(&SnakeQYRecord, i){
+				return FLASE;}
+	}
+	return TRUE;
+}
 
 /*
-*moveSnake - gets the value of the current velocity and prints a snake
-*           char in that direction from the current head location.
-*           It then enqueues that value to the snake queue. If
-*           nextSpace == food, it exits. If nextSpace == ' ' it
-*           dequeus a snake char from the snake queue and prints a ' '
-*           at the coordinate.
-*@params-null
-*@return-null
+spawnFood - randomly spawns a piece of food in valid spot on the
+	board, updates the coordinates for the food, and prints in the new
+	food char
+@params - null
+@returns - null void
 */
-void moveSnake(){
-	if (nextX == foodX & nextY == foodY){
+void spawnFood(){
+	int foodValid = FLASE;
+	while (!(foodValid)){
+		x = (rand() % (upperLimitX - lowerlimitX + 1)) + lowerlimitX;
+		y = (rand() % (upperLimitY - lowerLimitY + 1)) + lowerLimitY;
+		foodValid = checkFood(x, y);
 	}
-	else if (nextX == 0 | nextX == 49){
-	}
-	else if (nextY == 3 || nextY == 20){
-	}
-	else{
-	}
-  }
+	foodX = x;
+	foodY = y;
+	printChar(foodValid, foodX, foodY);
+}
+
 
 /*
 *checkGameLost - if nextSpace == snake or boarder, then GAME_OVER = 1
@@ -102,23 +127,7 @@ int gameWon(){
 */
 void advanceTheSnake(){
 }
-/*
-*writeChar - writes a character to the coordinates of the parameters
-* using escape sequences
-*Input - char c, int x, int y
-*Output - null
-*/
-void writeChar(char c, int x, int y){
-}
 
-/*
-*spawnFood - spawns a food char at a random coordinate that is not currently
-*snake and updates the foodX and foodY variables
-*inputs - null
-*outputs - null
-*/
-void spawnFood(){
-}
 /*********************************************************************/
 /*Main C Function */
 int main (void){
