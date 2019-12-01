@@ -31,6 +31,7 @@ int headY;
 int tailX;
 int tailY;
 int snakeLength = 3;
+extern Velocity;
 
 //values for boarders
 int upperLimitX = 49;
@@ -52,6 +53,8 @@ printChar -  moves the cursor to the x,y positions
 @return(s) - null void
 */
 void printChar(char C, int x, int y){
+	//ensure continuity while printing
+	__asm("CPSID I");
 	//save the cursor pos
 	PutStringI("\033[s", MAX_STRING);
 	
@@ -64,6 +67,7 @@ void printChar(char C, int x, int y){
 	
 	//restore cursor pos
 	PurtStringI("\033[u", MAX_STRING);
+	__asm("CPSIE I");
 }
 
 /*
@@ -74,8 +78,8 @@ checkFood - checks a given x,y corrdinate to see if it is a valid
 */
 int checkFood(int x, int y){
 	for (int i;snakeLength; i++){
-		if (x == readSnakeQ(&SnakeQYRecord, i) && /
-			y == readSnakeQ(&SnakeQYRecord, i){
+		if (x == ReadSnakeQ(i, &SnakeQYRecord) && /
+			y == ReadSnakeQ(i, &SnakeQYRecord){
 				return FLASE;}
 	}
 	return TRUE;
@@ -100,23 +104,55 @@ void spawnFood(){
 	printChar(foodValid, foodX, foodY);
 }
 
+void enqueueNewSnakePos(){
+	Enqueue(headY, &snakeQYRecord);
+	Enqueue(headX, &snakeQXRecord);	
+}
 
-/*
-*checkGameLost - if nextSpace == snake or boarder, then GAME_OVER = 1
-*@params - null
-*@return - int (bool 1=True, 0=False)
-*/
-int checkGameLost(){
-    }
 
-/*
-*gameWon - the game is won if the number of values enqueued in the snake
-*						queues is equal to the board area
-*@params - null
-*@return - null
-*/
-int gameWon(){
-    }
+int nextSpaceValid(char v){
+	//velocity is up
+	if (v = 'w'){
+		nextY ++;
+		if (nextY == upperLimitY || nextY == lowerLimitY){return FALSE;}
+		for (int i;snakeLength; i++){
+			if (nextX == ReadSnakeQ(i, &SnakeQYRecord) && nextY == ReadSnakeQ(i, &SnakeQYRecord){
+				return FLASE;
+			}
+		}
+	}
+	//velcoity if left
+	else if (v = 'a'){
+		nextX --;
+		if (nextX == lowerlimitX || nextX == upperLimitX){return FALSE;}
+		for (int i;snakeLength; i++){
+			if (nextX == ReadSnakeQ(i, &SnakeQYRecord) && nextY == ReadSnakeQ(i, &SnakeQYRecord){
+				return FLASE;
+			}
+		}
+	}
+	//velocity is down
+	else if (v = 's'){
+		nextY --;
+		if (nextY == upperLimitY || nextY == lowerLimitY){return FALSE;}
+		for (int i;snakeLength; i++){
+			if (nextX == ReadSnakeQ(i, &SnakeQYRecord) && nextY == ReadSnakeQ(i, &SnakeQYRecord){
+				return FLASE;
+			}
+		}
+	}
+	//velocity is right
+	else if (v = 'd'){
+		nextX ++;
+		if (nextX == lowerlimitX || nextX == upperLimitX){return FALSE;}
+		for (int i;snakeLength; i++){
+			if (nextX == ReadSnakeQ(i, &SnakeQYRecord) && nextY == ReadSnakeQ(i, &SnakeQYRecord){
+				return FLASE;
+			}
+		}
+	}
+	return TRUE;
+}
 
 /*
 *advanceTheSnake - uses the velocity variable to advance the snake to the
@@ -125,7 +161,32 @@ int gameWon(){
 *@params - null
 *@return - null
 */
-void advanceTheSnake(){
+void advanceTheSnake(char vel){
+	switch(vel){
+		case 'w':
+			headY++;
+			enqueueNewSnakePos();
+			printChar(SNAKE, headX, headY);
+			break;
+		case 'a':
+			headX --;
+			enqueueNewSnakePos();
+			printChar(SNAKE, headX, headY);
+			break;
+		case 's':
+			headY --;
+			enqueueNewSnakePos();
+			printChar(SNKAE, headX, headY);
+			break;
+		case 'd':
+			headX ++;
+			enqueueNewSnakePos();
+			printChar(SNAKE, headX, headY);
+			break;
+	}
+	if (!(nextX == foodX && nextY == foodY){
+		
+	}
 }
 
 /*********************************************************************/

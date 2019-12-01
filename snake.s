@@ -105,8 +105,8 @@ NULL        EQU  0x00
             EXPORT  PutNumHexI
             EXPORT  NewLineI
             EXPORT  PutNumI
-			EXPORT	QIdx
-			EXPORT	GameWon
+			EXPORT	ReadSnakeQ
+			EXPORT ReadFirstQ
 				
 			;variables
 			EXPORT	GameActive
@@ -117,12 +117,12 @@ NULL        EQU  0x00
 ;-----------------------------------------------------------------
 ;>>>>> begin subroutine code <<<<<
 ;################################################################
-;QIdx - finds the index value in a queue
+;ReadSnakeQ - finds the index value in a queue
 ;Inputs - R0:index
-;	  R1:=QRecord
+;	  	  R1:=QRecord
 ;Output - R0:value at QBuffer[index]
 ;################################################################
-QIdx			PROC	{R0-R13,LR}
+ReadSnakeQ		PROC	{R0-R13,LR}
 				PUSH	{R0-R3,LR}
 
 				;ToDo
@@ -130,17 +130,14 @@ QIdx			PROC	{R0-R13,LR}
 				POP	{R0-R3,PC}
 				ENDP
 ;################################################################
-;GameWon - returns a boolean if the game is won (compares the 
-;NUM_ENQD with a static constant)
-;Input-	null
-;Output R0: bool (1=true, 0=false)
+;ReadFirstQ -  reads the first byte in a queue without dequeuing it
+; Input - R0 =QRecord
+; Output - R0 first byte in the queu
 ;################################################################
-GameWon			PROC	{R0-R13,LR}
-				PUSH	{R0-R2,LR}
-
-				//ToDo
-
-				POP	{R0-R2,PC}
+ReadFirstQ		PROC	{R0-R13,LR}
+				PUSH	{R0-R3,LR}
+				
+				POP		{R0-R3,PC}
 				ENDP
 ;################################################################
 ;UART0_IRQHandler
@@ -190,6 +187,9 @@ TestRDRF	LDR		R1,=UART0_BASE
 			;if Snake is running
 			LDRB	R0,[R1,#UART0_D_OFFSET]
 			LDR		R1,=Velocity
+			LDRB	R2,[R1,#0]
+			;TODO: make sure 180 degree turns aren't possible
+			
 			STRB	R0,[R1,#0]
 			B		ISRFin
 			

@@ -31,3 +31,7 @@ void PutNumHexI (UInt32);
 void PutNumI (UInt8);
 void PutStringI (char String[], int StringBufferCapacity);
 void NewLineI (void);
+int Dequeue(UInt32);
+void Enqueue(Int8, UInt32);
+Int8 ReadSnakeQ(Int8, UInt32);
+Int8 ReadFirstQ(UInt32);
