@@ -166,17 +166,7 @@ InitSnakeQs		PROC	{R0-R13,LR}
 	
 				;initialiaze pointer variable for C99 code
 				LDR		R0,=AdSnakeQYRecord
-				STR		R0,[R1,#0]
-				
-				LDR R0,=SnakeQXBuffer                     ;Snake X Buffer
-				LDR R1,=SnakeQXRecord                     ;Snake X Record
-				MOVS R2,#Q_BUF_SZ                         ;R2 size of 80
-				BL InitQueue                              ;Call InitQueue
-
-				LDR R0,=SnakeQYBuffer                     ;Snake Y Buffer
-				LDR R1,=SnakeQYRecord                     ;Snake Y Record
-				MOVS R2,#Q_BUF_SZ                         ;R2 size of 80
-				BL InitQueue                              ;Call InitQueue    
+				STR		R0,[R1,#0]   
 				
 				POP		{R0-R3,PC}
 				ENDP
@@ -187,13 +177,36 @@ InitSnakeQs		PROC	{R0-R13,LR}
 ;Output - R0:value at QBuffer[index]
 ;################################################################
 ReadSnakeQ		PROC	{R0-R13,LR}
-				PUSH	{R0-R3,LR}
+				PUSH	{R0-R4,LR}
 				
-				LDR R1, =QRecieveRecord      ;Receive the queue
-				LDRB R1, [R0, R0]            ;Load the value into a temp register at the offset of the index
-				STR R1, [R0, #0]             ;store that value into R0
+				LDRB	R2,[R1,#BUF_SZ]
+				CMP		R0,R2
+				BGE		EndReadSnakeQ
+				
+				LDR		R3,[R1,#BUF_PAST]
+				LDR		R4,[R1,#IN_PTR]
+				
+				;R0 - i
+				;R1 - record address
+				;R2 - dummy coutner
+				;R3 - buf past address
+				;R4 - current address
+				
+ReadWhileLoop	CMP		R0,R2
+				BGT		EndReadSnakeQ
+				
+ReadIf			CMP		R4,R3			;if (current address = buffer past){curretn address = buf start, increment dummy coutner}
+				BNE		ReadElse
+				LDR		R4,[R1,BUF_STRT}
+				ADDS	R2,R2,#1
+				B		ReadWhileLoop
+				
+ReadElse		ADDS	R2,R2,#1		;else {increment current address and dummy counter}
+				ADDS	R4,R4,#1
+				B		ReadWhileLoop
 
-				POP	{R0-R3,PC}
+EndReadSnakeQ	LDRB	R0,[R4,#0]		;load indexed value
+				POP		{R0-R4,PC}
 				ENDP
 ;################################################################
 ;ReadFirstQ -  reads the first byte in a queue without dequeuing it
@@ -203,9 +216,8 @@ ReadSnakeQ		PROC	{R0-R13,LR}
 ReadFirstQ		PROC	{R0-R13,LR}
 				PUSH	{R0-R3,LR}
 				
-				LDR R0, =QRecieveRecord      ;Recived the queue
-				LDRB R1, [R0, #0]            ;sends the first byte in the queue to a temp resistor
-				STRB R1, [R0, #0]            ;stores that first byte back into R0
+				LDR		R0,[R0,#OUT_PTR]
+				LDRB	R0,[R0,#0]
 				
 				POP		{R0-R3,PC}
 				ENDP
