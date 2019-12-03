@@ -1,0 +1,10 @@
+--cpu Cortex-M0+
+".\objects\snake.o"
+".\objects\snake_1.o"
+".\Custom_IO_Ex06.lib"
+".\objects\startup_mkl46z4.o"
+".\objects\system_mkl46z4.o"
+--strict --scatter ".\Objects\Snake.sct"
+--summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols
+--info sizes --info totals --info unused --info veneers
+--list ".\Listings\Snake.map" -o .\Objects\Snake.axf

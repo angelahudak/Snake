@@ -1,0 +1,12 @@
+.\objects\snake.o: snake.c
+.\objects\snake.o: C:\Keil_v5\ARM\PACK\Keil\Kinetis_KLxx_DFP\1.14.0\Device\Include\MKL46Z4.h
+.\objects\snake.o: C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.6.0\CMSIS\Core\Include\core_cm0plus.h
+.\objects\snake.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+.\objects\snake.o: C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.6.0\CMSIS\Core\Include\cmsis_version.h
+.\objects\snake.o: C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.6.0\CMSIS\Core\Include\cmsis_compiler.h
+.\objects\snake.o: C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.6.0\CMSIS\Core\Include\cmsis_armcc.h
+.\objects\snake.o: C:\Keil_v5\ARM\PACK\Keil\Kinetis_KLxx_DFP\1.14.0\Device\Include\system_MKL46Z4.h
+.\objects\snake.o: Exercise11_C.h
+.\objects\snake.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+.\objects\snake.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdlib.h
+.\objects\snake.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\time.h

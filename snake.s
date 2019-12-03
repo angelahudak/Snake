@@ -36,6 +36,18 @@ NVIC_IPR_UART0_PRI_3  EQU (UART0_IRQ_PRIORITY << UART0_PRI_POS)
 ;---------------------------------------------------------------
 ;NVIC_ISER
 NVIC_ISER_UART0_MASK  EQU  UART0_IRQ_MASK
+NVIC_ICER_PIT_MASK    EQU  PIT_IRQ_MASK
+PIT_IRQ_PRIORITY    EQU  0
+NVIC_IPR_PIT_MASK   EQU  (3 << PIT_PRI_POS)
+NVIC_IPR_PIT_PRI_0  EQU  (PIT_IRQ_PRIORITY << PIT_PRI_POS)
+NVIC_ISER_PIT_MASK    EQU  PIT_IRQ_MASK
+;---------------------------------------------------------------
+PIT_LDVAL_10ms  EQU  239999
+;---------------------------------------------------------------
+PIT_MCR_EN_FRZ  EQU  PIT_MCR_FRZ_MASK
+;---------------------------------------------------------------
+PIT_TCTRL_CH_IE  EQU  (PIT_TCTRL_TEN_MASK :OR: PIT_TCTRL_TIE_MASK)
+NVIC_ICPR_PIT_MASK    EQU  PIT_IRQ_MASK
 ;Port A
 PORT_PCR_SET_PTA1_UART0_RX  EQU  (PORT_PCR_ISF_MASK :OR: PORT_PCR_MUX_SELECT_2_MASK)
 PORT_PCR_SET_PTA2_UART0_TX  EQU  (PORT_PCR_ISF_MASK :OR: PORT_PCR_MUX_SELECT_2_MASK)
@@ -85,6 +97,8 @@ LOWER_UPPER_SEPERATION		EQU		32
 CR          EQU  0x0D
 LF          EQU  0x0A
 NULL        EQU  0x00
+TRUE		EQU	 0x01
+FALSE		EQU	 0x00
 ;****************************************************************
 ;Snake values
 MAX_SNAKE EQU 864
@@ -118,8 +132,8 @@ MAX_SNAKE EQU 864
 			EXPORT 	GameOver
 			EXPORT	GameWon
 			EXPORT	GameLost
-			EXPORT	=SnakeQXRecord
-			EXPORT	=SnakeQYRecord
+			EXPORT	SnakeQXRecord
+			EXPORT	SnakeQYRecord
 ;-----------------------------------------------------------------
 			;IMPORTS
 			
@@ -228,15 +242,7 @@ PIT_IRQHandler	PROC	{R0-R13,LR}
 				
 				CPSID	I					;mask interrupts
 				
-				LDR		R0,=RunStopWatch
-				LDRB	R0,[R0,#0]
-				CMP		R0,#0
-				BEQ		ClearInterrupt		;if (RunStopWatch0
-				
-				LDR		R0,=Count
-				LDR		R1,[R0,#0]
-				ADDS	R1,R1,#1
-				STR		R1,[R0,#0]			;{count++}
+				;TODO
 				
 ClearInterrupt	LDR		R0,=PIT_CH0_BASE
 				LDR		R1,=PIT_TFLG_TIF_MASK
@@ -764,7 +770,7 @@ QTransmitBuffer	SPACE	Q_BUF_SZ
             ALIGN
 QTransmitRecord	SPACE	Q_REC_SZ
 			ALIGN
-SnakeQXRecord	SPACE	Q_REC-SZ
+SnakeQXRecord	SPACE	Q_REC_SZ
 			ALIGN
 SnakeQXBuffer	SPACE	MAX_SNAKE
 			ALIGN
@@ -779,7 +785,7 @@ Velocity		SPACE	1
 GameActive		SPACE	1
 GameOver		SPACE	1
 GameWon			SPACE	1
-GameLOST		SPACE	1
+GameLost		SPACE	1
 			ALIGN
 ;>>>>> begin variables here <<<<<
 ;>>>>>   end variables here <<<<<
