@@ -150,9 +150,9 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>332</LineNumber>
+          <LineNumber>80</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>3142</Address>
+          <Address>4276</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
@@ -161,7 +161,7 @@
           <BreakIfRCount>1</BreakIfRCount>
           <Filename>.\snake.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\Snake\snake.c\332</Expression>
+          <Expression>\\Snake\snake.c\80</Expression>
         </Bp>
       </Breakpoint>
       <MemoryWindow1>

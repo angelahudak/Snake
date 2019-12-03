@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Objects\Snake.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Objects\Snake.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060528: Last Updated: Tue Dec 03 14:52:28 2019
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060528: Last Updated: Tue Dec 03 15:22:58 2019
 <BR><P>
 <H3>Maximum Stack Usage =         48 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -522,7 +522,7 @@ Global Symbols
 <P><STRONG><a name="[2b]"></a>SystemInit</STRONG> (Thumb, 180 bytes, Stack size 0 bytes, system_mkl46z4.o(i.SystemInit))
 <BR>[Address Reference Count : 1]<UL><LI> startup_mkl46z4.o(.text)
 </UL>
-<P><STRONG><a name="[4f]"></a>advanceTheSnake</STRONG> (Thumb, 272 bytes, Stack size 8 bytes, snake.o(i.advanceTheSnake))
+<P><STRONG><a name="[4f]"></a>advanceTheSnake</STRONG> (Thumb, 312 bytes, Stack size 8 bytes, snake.o(i.advanceTheSnake))
 <BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = advanceTheSnake &rArr; spawnFood &rArr; printChar
 </UL>
 <BR>[Calls]<UL><LI><a href="#[52]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReadFirstQ
@@ -551,7 +551,7 @@ Global Symbols
 <LI><a href="#[4f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;advanceTheSnake
 </UL>
 
-<P><STRONG><a name="[38]"></a>main</STRONG> (Thumb, 588 bytes, Stack size 0 bytes, snake.o(i.main))
+<P><STRONG><a name="[38]"></a>main</STRONG> (Thumb, 630 bytes, Stack size 0 bytes, snake.o(i.main))
 <BR><BR>[Stack]<UL><LI>Max Depth = 48<LI>Call Chain = main &rArr; advanceTheSnake &rArr; spawnFood &rArr; printChar
 </UL>
 <BR>[Calls]<UL><LI><a href="#[58]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;TXQEmpty
@@ -571,8 +571,8 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[37]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;__rt_entry_main
 </UL>
 
-<P><STRONG><a name="[59]"></a>nextSpaceValid</STRONG> (Thumb, 390 bytes, Stack size 16 bytes, snake.o(i.nextSpaceValid))
-<BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = nextSpaceValid
+<P><STRONG><a name="[59]"></a>nextSpaceValid</STRONG> (Thumb, 310 bytes, Stack size 24 bytes, snake.o(i.nextSpaceValid))
+<BR><BR>[Stack]<UL><LI>Max Depth = 24<LI>Call Chain = nextSpaceValid
 </UL>
 <BR>[Calls]<UL><LI><a href="#[55]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ReadSnakeQ
 </UL>

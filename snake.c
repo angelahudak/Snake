@@ -74,22 +74,25 @@ printChar -  moves the cursor to the x,y positions
 @return(s) - null void
 */
 void printChar(char C, int x, int y){
+	//__ASM("CPSID I");
+	
 	//save the cursor pos
 	PutStringI("\033[s", MAX_STRING);
 	
 	//
-	PutStringI("\033[<", MAX_STRING);
+	PutStringI("\033[", MAX_STRING);
 	PutCharI(x + 49);
-	PutStringI(">C", MAX_STRING);
+	PutStringI("C", MAX_STRING);
 	
-	PutStringI("\033[<",MAX_STRING);
+	PutStringI("\033[",MAX_STRING);
 	PutCharI(y + 49);
-	PutStringI(">A\b", MAX_STRING);
+	PutStringI("A\b", MAX_STRING);
 	PutCharI(C);
 	
 	//restore cursor pos
 	PutStringI("\033[u", MAX_STRING);
 	while (TXQEmpty() == FALSE);
+	//__ASM("CPSIE I");
 }
 
 /*
@@ -147,41 +150,43 @@ nextSpaceValid - tells if the next space will be valid
 */
 int nextSpaceValid(char v){
 	//velocity is up
+	int tempNextX = nextX;
+	int tempNextY = nextY;
 	if (v == 'w'){
-		nextY ++;
-		if (nextY == upperLimitY || nextY == lowerLimitY){return FALSE;}
-		for (int i;snakeLength; i++){
-			if (nextX == ReadSnakeQ(i, AdSnakeQYRecord) && nextY == ReadSnakeQ(i, AdSnakeQYRecord)){
+		tempNextY ++;
+		if (tempNextY == upperLimitY || tempNextY == lowerLimitY){return FALSE;}
+		for (int i = 0;i <= snakeLength; i++){
+			if (tempNextX == ReadSnakeQ(i, AdSnakeQYRecord) && tempNextY == ReadSnakeQ(i, AdSnakeQYRecord)){
 				return FALSE;
 			}
 		}
 	}
 	//velcoity if left
 	else if (v == 'a'){
-		nextX --;
-		if (nextX == lowerlimitX || nextX == upperLimitX){return FALSE;}
-		for (int i;snakeLength; i++){
-			if (nextX == ReadSnakeQ(i, AdSnakeQYRecord) && nextY == ReadSnakeQ(i, AdSnakeQYRecord)){
+		tempNextX --;
+		if (tempNextX == lowerlimitX || tempNextX == upperLimitX){return FALSE;}
+		for (int i = 0;i <= snakeLength; i++){
+			if (tempNextX == ReadSnakeQ(i, AdSnakeQYRecord) && tempNextY == ReadSnakeQ(i, AdSnakeQYRecord)){
 				return FALSE;
 			}
 		}
 	}
 	//velocity is down
 	else if (v == 's'){
-		nextY --;
-		if (nextY == upperLimitY || nextY == lowerLimitY){return FALSE;}
-		for (int i;snakeLength; i++){
-			if (nextX == ReadSnakeQ(i, AdSnakeQYRecord) && nextY == ReadSnakeQ(i, AdSnakeQYRecord)){
+		tempNextY --;
+		if (tempNextY == upperLimitY || tempNextY == lowerLimitY){return FALSE;}
+		for (int i = 0;i <= snakeLength; i++){
+			if (tempNextX == ReadSnakeQ(i, AdSnakeQYRecord) && tempNextY == ReadSnakeQ(i, AdSnakeQYRecord)){
 				return FALSE;
 			}
 		}
 	}
 	//velocity is right
 	else if (v == 'd'){
-		nextX ++;
-		if (nextX == lowerlimitX || nextX == upperLimitX){return FALSE;}
-		for (int i;snakeLength; i++){
-			if (nextX == ReadSnakeQ(i, AdSnakeQYRecord) && nextY == ReadSnakeQ(i, AdSnakeQYRecord)){
+		tempNextX ++;
+		if (tempNextX == lowerlimitX || tempNextX == upperLimitX){return FALSE;}
+		for (int i = 0;i <= snakeLength; i++){
+			if (tempNextX == ReadSnakeQ(i, AdSnakeQYRecord) && tempNextY == ReadSnakeQ(i, AdSnakeQYRecord)){
 				return FALSE;
 			}
 		}
@@ -199,22 +204,26 @@ int nextSpaceValid(char v){
 void advanceTheSnake(Int8 vel){
 	switch(vel){
 		case 'w':
+			nextY ++;
 			headY++;
 			enqueueNewSnakePos();
 			printChar(SNAKE, headX, headY);
 			break;
 		case 'a':
+			nextX --;
 			headX --;
 			enqueueNewSnakePos();
 			printChar(SNAKE, headX, headY);
 			break;
 		case 's':
+			nextY --;
 			headY --;
 			enqueueNewSnakePos();
 			printChar(SNAKE, headX, headY);
 			break;
 		case 'd':
 			headX ++;
+			nextX ++;
 			enqueueNewSnakePos();
 			printChar(SNAKE, headX, headY);
 			break;
@@ -308,6 +317,10 @@ int main (void){
 			tailX = 15;
 			tailY = 10;
 			
+			//Init next values
+			nextX = headX;
+			nextY = headY;
+			
 			//Init queues to record snake values
 			InitSnakeQs();
 			
@@ -330,8 +343,8 @@ int main (void){
 			//main game loop
 			while (GameActive == TRUE){
 				if (PITCounter == Difficulty){
-					PutStringI("Test Refresh", MAX_STRING);
-					//__asm("CPSID I");
+					__asm("CPSID I");
+					PutCharI('A');
 					if (nextSpaceValid(Velocity) == FALSE){
 						GameLost = TRUE;
 						GameActive = FALSE;
@@ -342,9 +355,9 @@ int main (void){
 					}
 					else {
 						advanceTheSnake(Velocity);
-						PITCounter = 0;
 					}
-					//__asm("CPSIE I");
+					PITCounter = 0;
+					__asm("CPSIE I");
 				}
 			}
 			
@@ -354,7 +367,7 @@ int main (void){
 			//game over sequence	
 			if (GameLost == TRUE){
 				//move cursor for new input
-				PutStringI("\033[<21>;<0>",MAX_STRING);
+				PutStringI("\033[21;0",MAX_STRING);
 				//print failure message
 				PutStringI("GAME OVER!", MAX_STRING);
 				NewLineI();
@@ -363,12 +376,14 @@ int main (void){
 				while (!(userInput == 0x0D)){
 					userInput = GetCharI();
 				}
+				PutStringI("\033[2J", MAX_STRING);
+				PutStringI("\033[22A", MAX_STRING);
 			}
 			
 			//game won sequence
 			else if (GameWon == TRUE){
 				//move cursor for new input
-				PutStringI("\033[<21>;<0>",MAX_STRING);
+				PutStringI("\033[21;0",MAX_STRING);
 				//print failure message
 				PutStringI("YOU WIN!", MAX_STRING);
 				NewLineI();
@@ -379,6 +394,7 @@ int main (void){
 				}
 				//clear the screen and moe the cursor to (0,0)
 				PutStringI("\033[2J", MAX_STRING);
+				PutStringI("\033[22A", MAX_STRING);
 			}
     }
     return (0);
