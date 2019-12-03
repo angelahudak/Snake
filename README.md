@@ -27,11 +27,11 @@
 3. The program will prompt the user to press the >enter< key to begin playing and wait for a carrage return (CR = #0x0D) input.
 4. The program will initialize the snake queues, print the board, enable the gameActive boolean, PIT interrupts, and begin refreshing the board using escape sequences until the gameOver boolean is true.
      1. The game will refresh at a speed determinded by the user selected difficulty level (1 = 10Hz, 2 = 13Hz, and 3 = 15Hz).
-     2. At every refresh the snake will be advanced one character in the direction of the velocioty and will lose one character off of its tail if the next space is not food.
+     2. At every refresh the snake will be advanced one character in the direction of the velocity and will lose one character off of its tail if the next space is not food.
      3. The game will enable a boolean variable that will cause the Recieve interupt to only change the snakes velocity under certain conditions and NOT use the Recieve Queue while the game is active.
      4. The game will end if the next space if a snake character or wall character (GAME OVER!), or if the length of the snake is equal to the area of the board (YOU WIN!).
 5. When the game ends the prgram will disable all game state variables, display either __"GAMEOVER"__ or __"YOU WIN!"__, prompt the player to press the >enter< key to rest the program, and wait for a CR character.
-6. The program will clear the terminal and move the cursor back to its origonal position using escape sequences, then start over from step one.
+6. The program will clear the terminal and move the cursor back to its original position using escape sequences, then start over from step one.
 
 ![Snake State Diagram](ARMC99_Snake_StateDiagram.png)
 
