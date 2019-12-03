@@ -36,30 +36,34 @@
 ![Snake State Diagram](ARMC99_Snake_StateDiagram.png)
 
 ### C99 Functions Porgress Checklist
-- [ ] void main(int [ ])
-- [ ] void spawnFood( )
+- [x] void main(int [ ])
+- [x] void spawnFood( )
 - [ ] int isGameOver( )
-- [ ] void putChar(int x, int y)
-- [ ] void advanceTheSnake( )
+- [x] void putChar(int x, int y)
+- [x] void advanceTheSnake( )
+- [ ] void setDifficulty(int difficulty)
+- [x] int nextSpaceValid( )
 
 ### ARM Assembly Subroutines Porgress Checklist
 - [ ] Init_Snake_Game
 - [x] Init_Queue
 - [x] Dequeue
 - [x] Enqueue
-- [ ] Init_PIT_IRQ
+- [x] Init_PIT_IRQ
 - [ ] PIT_IRQHandler
-- [ ] Init_UART0_IRQ
-- [ ] UART0_IRQHandler
+- [x] Init_UART0_IRQ
+- [x] UART0_IRQHandler
 - [x] GetCharI
 - [x] PutCharI
 - [x] PutStringI
 - [x] NewLineI
-- [ ] ReadSnakeQueues
+- [ ] ReadFirstQ
+- [ ] ReadSnakeQ
+- [ ] InitSnakeQs
 
 ## Enhancements
     Appart from the Minimum Viable Product our development team is working on adding the following 
     enhancements to ARM and C99 Snake
-1. [ ] Difficulty Levels -  increased difficulty based increasing speed (ie. refresh rate) of the snake and addition of increasing amounts of “walls” on the board besides the boarders.
+1. [x] Difficulty Levels -  increased difficulty based increasing speed (ie. refresh rate) of the snake and addition of increasing amounts of “walls” on the board besides the boarders.
 2. [ ] ARM/C99Snake Wrap Around - instead of the Snake dying when hitting the wall it will wrap around to the other side of the screen at the same column/row it was traveling in.
 3. [ ] Increased Graphics Package - Using more in-depth escape sequences create different colors for the snake food and borders as well as obscure ASCII values for blocks.
