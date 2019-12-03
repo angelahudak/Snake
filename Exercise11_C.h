@@ -13,13 +13,14 @@ typedef unsigned short int UInt16;
 typedef unsigned char UInt8;
 
 /*assembly variables*/
-extern char Velocity;
+extern Int8 Velocity;
 extern Int8 GameActive;
 extern Int8 GameWon;
 extern Int8 GameLost;
 extern Int8 Difficulty;
 extern UInt32 AdSnakeQYRecord;
 extern UInt32 AdSnakeQXRecord;
+extern Int8 PITCounter;
 
 /* assembly language subroutines */
 char GetCharI (void);

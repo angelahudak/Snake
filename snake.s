@@ -137,11 +137,9 @@ MAX_SNAKE EQU 864  ;18 x 48 => total # of possible occupied spaces
 			EXPORT	AdSnakeQXRecord
 			EXPORT	AdSnakeQYRecord
 			EXPORT	Difficulty
+			EXPORT	PITCounter
 ;-----------------------------------------------------------------
-			;IMPORTS
-			IMPORT	advanceTheSnake
-			IMPORT	nextSpaceValid
-			IMPORT	snakeLength			
+			;IMPORTS			
 ;-----------------------------------------------------------------
 ;>>>>> begin subroutine code <<<<<
 ;################################################################
@@ -155,12 +153,12 @@ TXQEmpty		PROC	{R1-R13,LR}
 				LDR		R0,=QTransmitRecord
 				LDRB	R0,[R0,#NUM_ENQD]
 				
-ReturnFalse		CMP		R0,#0
+ReturnTrue		CMP		R0,#0
 				BNE		ReturnFalse
 				MOVS	R0,#TRUE
 				B		EndTXQEmpty
 				
-ReturnTrue		MOVS	R0,#FALSE		
+ReturnFalse		MOVS	R0,#FALSE		
 								
 EndTXQEmpty		POP		{R1-R3,PC}
 				ENDP
@@ -319,51 +317,9 @@ PIT_IRQHandler	PROC	{R0-R13,LR}
 				BEQ		ClearInterrupt		;dont interrupt if the game inactive
 				
 				LDR		R0,=PITCounter
-				LDRB	R0,[R0,#0]			;R0 <- PIT counter
-				
-				LDR		R1,=Difficulty
-				LDRB	R1,[R1,#0]			;R1 <- Difficulty
-				
-				CMP		R1,R0
-				BNE		NoRefresh
-				
-				LDR		R0,=PITCounter
-				MOVS	R1,#0
-				STRB	R1,[R0,#0]			;reset Pit counter
-				
-				LDR		R0,=Velocity
-				LDRB	R0,[R0,#0]
-				BL		nextSpaceValid
-				CMP		R0,#FALSE
-				BEQ		GameLostState		;check for game loss states
-				
-				LDR		R0,=snakeLength
-				LDRB	R0,[R0,#0]
-				LDR		R1,=MAX_SNAKE
-				LDR 	R1,[R1,#0]
-				BL		DIVU
-				CMP		R1,#1
-				BEQ		GameWonState		;check for game won states
-				
-				LDR		R0,=Velocity
-				LDRB	R0,[R0,#0]
-				BL		advanceTheSnake		;advance the snake
-				
-				B		ClearInterrupt
-				
-GameLostState	LDR		R0,=GameLost
-				MOVS	R1,#TRUE
-				STRB	R1,[R0,#0]
-				B		ClearInterrupt
-				
-GameWonState	LDR		R0,=GameWon
-				MOVS	R1,#TRUE
-				STRB	R1,[R0,#0]
-				B		ClearInterrupt
-				
-NoRefresh		ADDS	R0,R0,#1
-				LDR		R1,=PITCounter
-				STRB	R0,[R1,#0]
+				LDRB	R1,[R0,#0]
+				ADDS	R1,R1,#1
+				STRB	R1,[R0,#0]			;increment PITCounter
 				
 ClearInterrupt	LDR		R0,=PIT_CH0_BASE
 				LDR		R1,=PIT_TFLG_TIF_MASK
@@ -938,8 +894,10 @@ GameActive		SPACE	1
 GameWon			SPACE	1
 			ALIGN
 GameLost		SPACE	1
+			ALIGN
 AdSnakeQXRecord	SPACE	4
 AdSnakeQYRecord	SPACE	4
+			ALIGN
 Difficulty		SPACE	1
 PITCounter		SPACE	1
 			ALIGN

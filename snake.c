@@ -21,7 +21,7 @@
 /*********************************************************************/
 /*Global variables*/
 //ARM Global variables
-extern char Velocity;
+extern Int8 Velocity;
 extern Int8 GameLost;
 extern Int8 GameWon;
 extern UInt32 AdSnakeQYRecord;
@@ -74,21 +74,22 @@ printChar -  moves the cursor to the x,y positions
 @return(s) - null void
 */
 void printChar(char C, int x, int y){
-	//ensure continuity while printing
-	__asm("CPSID I");
 	//save the cursor pos
 	PutStringI("\033[s", MAX_STRING);
 	
+	//
 	PutStringI("\033[<", MAX_STRING);
 	PutCharI(x + 49);
-	PutStringI(">;<", MAX_STRING);
+	PutStringI(">C", MAX_STRING);
+	
+	PutStringI("\033[<",MAX_STRING);
 	PutCharI(y + 49);
-	PutStringI(">f\b", MAX_STRING);
+	PutStringI(">A\b", MAX_STRING);
 	PutCharI(C);
 	
 	//restore cursor pos
 	PutStringI("\033[u", MAX_STRING);
-	__asm("CPSIE I");
+	while (TXQEmpty() == FALSE);
 }
 
 /*
@@ -195,7 +196,7 @@ int nextSpaceValid(char v){
 *@params - null
 *@return - null
 */
-void advanceTheSnake(char vel){
+void advanceTheSnake(Int8 vel){
 	switch(vel){
 		case 'w':
 			headY++;
@@ -252,7 +253,7 @@ int main (void){
 			PutStringI("Right-Click/Change Settings.../Terminal/Force Off x2\n\r", MAX_STRING);			//row 21
 	    
 			//difficulty computation
-			PutStringI("Press >1<, >2<, or >3< to slect your difficulty", MAX_STRING);				    //row 20
+			PutStringI("Press 1, 2, or 3 to slect your difficulty", MAX_STRING);				    //row 20
 			while (!(userInput == '1' || userInput == '2' || userInput == '3')){
 				userInput = GetCharI();
 			}
@@ -327,7 +328,25 @@ int main (void){
 			GameLost = FALSE;
 			
 			//main game loop
-			while (GameActive == TRUE)
+			while (GameActive == TRUE){
+				if (PITCounter == Difficulty){
+					PutStringI("Test Refresh", MAX_STRING);
+					//__asm("CPSID I");
+					if (nextSpaceValid(Velocity) == FALSE){
+						GameLost = TRUE;
+						GameActive = FALSE;
+					}
+					else if (snakeLength == 864){
+						GameWon = TRUE;
+						GameActive = FALSE;
+					}
+					else {
+						advanceTheSnake(Velocity);
+						PITCounter = 0;
+					}
+					//__asm("CPSIE I");
+				}
+			}
 			
 			//enable normal recieving
 			GameActive = FALSE;
