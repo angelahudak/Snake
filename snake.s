@@ -101,7 +101,7 @@ TRUE		EQU	 0x01
 FALSE		EQU	 0x00
 ;****************************************************************
 ;Snake values
-MAX_SNAKE EQU 864
+MAX_SNAKE EQU 864  ;18 x 48 => total # of possible occupied spaces
 ;****************************************************************
 ;MACROs
 ;****************************************************************
@@ -136,6 +136,8 @@ MAX_SNAKE EQU 864
 			EXPORT	SnakeQYRecord
 ;-----------------------------------------------------------------
 			;IMPORTS
+			IMPORT	advanceTheSnake
+			IMPORT	nextSpaveValid
 			
 ;-----------------------------------------------------------------
 ;>>>>> begin subroutine code <<<<<
