@@ -147,9 +147,7 @@ MAX_SNAKE EQU 864  ;18 x 48 => total # of possible occupied spaces
 ;################################################################
 InitSnakeQs		PROC	{R0-R13,LR}
 				PUSH	{R0-R3,LR}
-<<<<<<< HEAD
-<<<<<<< HEAD
-	
+
 				;Init X Q
 				LDR		R0,=SnakeQXBuffer
 				LDR		R1,=SnakeQXRecord
@@ -169,10 +167,6 @@ InitSnakeQs		PROC	{R0-R13,LR}
 				;initialiaze pointer variable for C99 code
 				LDR		R0,=AdSnakeQYRecord
 				STR		R0,[R1,#0]
-	
-=======
-=======
->>>>>>> 2743db10333f1973e4da8257b575962374f352f3
 				
 				LDR R0,=SnakeQXBuffer                     ;Snake X Buffer
 				LDR R1,=SnakeQXRecord                     ;Snake X Record
@@ -184,10 +178,6 @@ InitSnakeQs		PROC	{R0-R13,LR}
 				MOVS R2,#Q_BUF_SZ                         ;R2 size of 80
 				BL InitQueue                              ;Call InitQueue    
 				
-<<<<<<< HEAD
->>>>>>> 2743db10333f1973e4da8257b575962374f352f3
-=======
->>>>>>> 2743db10333f1973e4da8257b575962374f352f3
 				POP		{R0-R3,PC}
 				ENDP
 ;################################################################

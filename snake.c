@@ -92,7 +92,7 @@ checkFood - checks a given x,y corrdinate to see if it is a valid
 */
 int checkFood(int x, int y){
 	for (int i;snakeLength; i++){
-		if (x == ReadSnakeQ(i, SnakeQYRecord) && y == ReadSnakeQ(i, SnakeQYRecord)){
+		if (x == ReadSnakeQ(i, AdSnakeQYRecord) && y == ReadSnakeQ(i, AdSnakeQYRecord)){
 				return FALSE;}
 	}
 	return TRUE;
@@ -126,8 +126,8 @@ enqueueNewSnakePos - enqueues the headX and headY values into the
 @return(s) - null void
 */
 void enqueueNewSnakePos(){
-	Enqueue(headY, SnakeQYRecord);
-	Enqueue(headX, SnakeQXRecord);	
+	Enqueue(headY, AdSnakeQYRecord);
+	Enqueue(headX, AdSnakeQXRecord);	
 }
 
 /*
@@ -143,7 +143,7 @@ int nextSpaceValid(char v){
 		nextY ++;
 		if (nextY == upperLimitY || nextY == lowerLimitY){return FALSE;}
 		for (int i;snakeLength; i++){
-			if (nextX == ReadSnakeQ(i, SnakeQYRecord) && nextY == ReadSnakeQ(i, SnakeQYRecord)){
+			if (nextX == ReadSnakeQ(i, AdSnakeQYRecord) && nextY == ReadSnakeQ(i, AdSnakeQYRecord)){
 				return FALSE;
 			}
 		}
@@ -153,7 +153,7 @@ int nextSpaceValid(char v){
 		nextX --;
 		if (nextX == lowerlimitX || nextX == upperLimitX){return FALSE;}
 		for (int i;snakeLength; i++){
-			if (nextX == ReadSnakeQ(i, SnakeQYRecord) && nextY == ReadSnakeQ(i, SnakeQYRecord)){
+			if (nextX == ReadSnakeQ(i, AdSnakeQYRecord) && nextY == ReadSnakeQ(i, AdSnakeQYRecord)){
 				return FALSE;
 			}
 		}
@@ -163,7 +163,7 @@ int nextSpaceValid(char v){
 		nextY --;
 		if (nextY == upperLimitY || nextY == lowerLimitY){return FALSE;}
 		for (int i;snakeLength; i++){
-			if (nextX == ReadSnakeQ(i, SnakeQYRecord) && nextY == ReadSnakeQ(i, SnakeQYRecord)){
+			if (nextX == ReadSnakeQ(i, AdSnakeQYRecord) && nextY == ReadSnakeQ(i, AdSnakeQYRecord)){
 				return FALSE;
 			}
 		}
@@ -173,7 +173,7 @@ int nextSpaceValid(char v){
 		nextX ++;
 		if (nextX == lowerlimitX || nextX == upperLimitX){return FALSE;}
 		for (int i;snakeLength; i++){
-			if (nextX == ReadSnakeQ(i, SnakeQYRecord) && nextY == ReadSnakeQ(i, SnakeQYRecord)){
+			if (nextX == ReadSnakeQ(i, AdSnakeQYRecord) && nextY == ReadSnakeQ(i, AdSnakeQYRecord)){
 				return FALSE;
 			}
 		}
@@ -214,10 +214,10 @@ void advanceTheSnake(char vel){
 	//only adavnce the tail if no food is eaten
 	if (!(nextX == foodX && nextY == foodY)){
 		printChar(NOTHING, tailX, tailY);
-		Dequeue(SnakeQXRecord);
-		Dequeue(SnakeQYRecord);
-		tailX = ReadFirstQ(SnakeQXRecord);
-		tailY = ReadFirstQ(SnakeQYRecord);
+		Dequeue(AdSnakeQXRecord);
+		Dequeue(AdSnakeQYRecord);
+		tailX = ReadFirstQ(AdSnakeQXRecord);
+		tailY = ReadFirstQ(AdSnakeQYRecord);
 	}
 	else if (nextX == foodX && nextY == foodY) {snakeLength ++;}
 }
@@ -289,12 +289,12 @@ int main (void){
 			InitSnakeQs();
 			
 			//enqueue back 2 snake x coordinates
-			Enqueue(15, SnakeQXRecord);
-			Enqueue(16, SnakeQXRecord);
+			Enqueue(15, AdSnakeQXRecord);
+			Enqueue(16, AdSnakeQXRecord);
 			
 			//enqueue last 2 snake y coordinates
-			Enqueue(10, SnakeQYRecord);
-			Enqueue(10, SnakeQYRecord);
+			Enqueue(10, AdSnakeQYRecord);
+			Enqueue(10, AdSnakeQYRecord);
 			
 			//snake first snake head coordinates
 			enqueueNewSnakePos();
