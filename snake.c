@@ -21,7 +21,6 @@
 /*********************************************************************/
 /*Global variables*/
 //ARM Global variables
-extern int GameOver;
 extern char Velocity;
 extern int GameLost;
 extern int GameWon;
@@ -236,21 +235,21 @@ int main (void){
     for (;;){/*main loop*/
 			//init game local variables
 			char userInput = 'A';
-			GameOver = TRUE;
+			GameActive = FALSE;
 			
 			//prompt user for <enter> key
-			PutStringI("Please edit you PuTTy Terminal Settings:\n", MAX_STRING);										//row 22
-			PutStringI("Right-Click/Change Settings.../Terminal/Force Off x2\n", MAX_STRING);				//row 21
+			PutStringI("Please edit you PuTTy Terminal Settings:\n", MAX_STRING);						//row 22
+			PutStringI("Right-Click/Change Settings.../Terminal/Force Off x2\n", MAX_STRING);			//row 21
 	    
 			//difficulty computation
-			PutStringI("Press >1< >2< or >3< to slect your difficulty", MAX_STRING);								//row 20
+			PutStringI("Press >1< >2< or >3< to slect your difficulty\n", MAX_STRING);					//row 20
 			while (!(userInput == '1' || userInput == '2' || userInput == '3')){
 				userInput = GetCharI();
 			}
 			setDifficulty(userInput - 48);
 			
 			//wait for user >enter< loop
-			PutStringI("Press the <enter> key to play Snake\n", MAX_STRING);												//row 19			
+			PutStringI("Press the <enter> key to play Snake\n", MAX_STRING);							//row 19			
 			while (!(userInput == 0x0D)){
 				userInput = GetCharI();
 			}
@@ -302,10 +301,11 @@ int main (void){
 
 			//enable game control booleans
 			GameActive = TRUE;
-			GameOver = FALSE;
+			GameWon = FALSE;
+			GameLost = FALSE;
 			
 			//main game loop
-			while (GameOver == FALSE)
+			while (GameActive == TRUE)
 			
 			//enable normal recieving
 			GameActive = FALSE;

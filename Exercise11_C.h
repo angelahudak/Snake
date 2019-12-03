@@ -15,7 +15,6 @@ typedef unsigned char UInt8;
 /*assembly variables*/
 extern char Velocity;
 extern int GameActive;
-extern int GameOver;
 extern int GameWon;
 extern int GameLost;
 

@@ -129,7 +129,6 @@ MAX_SNAKE EQU 864  ;18 x 48 => total # of possible occupied spaces
 			;variables
 			EXPORT	GameActive
 			EXPORT	Velocity
-			EXPORT 	GameOver
 			EXPORT	GameWon
 			EXPORT	GameLost
 			EXPORT	SnakeQXRecord
@@ -785,7 +784,6 @@ SnakeQYBuffer	SPACE	MAX_SNAKE
 ;StackRRecord	SPACE	STACK_REC_SZ
 Velocity		SPACE	1
 GameActive		SPACE	1
-GameOver		SPACE	1
 GameWon			SPACE	1
 GameLost		SPACE	1
 			ALIGN
