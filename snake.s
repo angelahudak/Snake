@@ -133,10 +133,12 @@ MAX_SNAKE EQU 864  ;18 x 48 => total # of possible occupied spaces
 			EXPORT	GameLost
 			EXPORT	AdSnakeQXRecord
 			EXPORT	AdSnakeQYRecord
+			EXPORT	Difficulty
 ;-----------------------------------------------------------------
 			;IMPORTS
 			IMPORT	advanceTheSnake
 			IMPORT	nextSpaveValid
+			IMPORT	snakeLength
 			
 ;-----------------------------------------------------------------
 ;>>>>> begin subroutine code <<<<<
@@ -291,7 +293,54 @@ PIT_IRQHandler	PROC	{R0-R13,LR}
 				
 				CPSID	I					;mask interrupts
 				
-				;TODO
+				LDR		R0,=GameActive
+				LDRB	R0,[R0,#0]
+				CMP		R0,#FALSE
+				BEQ		ClearInterrupt		;dont interrupt if the game inactive
+				
+				LDR		R0,=PITCounter
+				LDRB	R0,[R0,#0]			;R0 <- PIT counter
+				
+				LDR		R1,=Difficulty
+				LDRB	R1,[R1,#0]			;R1 <- Difficulty
+				
+				CMP		R1,R0
+				BNE		NoRefresh
+				
+				LDR		R0,=PITCounter
+				MOVS	R1,#0
+				STRB	R1,[R0,#0]			;reset Pit counter
+				
+				LDR		R0,=Velocity
+				LDRB	R0,[R0,#0]
+				BL		nextSpaceValid
+				CMP		R0,#FALSE
+				BEQ		GameLost			;check for game loss states
+				
+				LDR		R0,=snakeLength
+				LDRB	R0,[R0,#0]
+				CMP		R0,#MAX_SNAKE
+				BEQ		GameWon				;check for game won states
+				
+				LDR		R0,=Velocity
+				LDRB	R0,[R0,#0]
+				BL		advanceTheSnake		;advance the snake
+				
+				B		ClearInterrupt
+				
+GameLost		LDR		R0,=GameLost
+				MOVS	R1,#TRUE
+				STRB	R1,[R0,#0]
+				B		ClearInterrupt
+				
+GameWon			LDR		R0,=GameWon
+				MOVS	R1,#TRUE
+				STRB	R1,[R0,#0]
+				B		ClearInterrupt
+				
+Norefresh		ADDS	R0,R0,#1
+				LDR		R1,=PITCounter
+				STRB	R0,[R1,#0]
 				
 ClearInterrupt	LDR		R0,=PIT_CH0_BASE
 				LDR		R1,=PIT_TFLG_TIF_MASK
@@ -866,6 +915,8 @@ GameWon			SPACE	1
 GameLost		SPACE	1
 AdSnakeQXRecord	SPACE	4
 AdSnakeQYRecord	SPACE	4
+Difficulty		SPACE	1
+PITCounter		SPACE	1
 			ALIGN
 ;>>>>> begin variables here <<<<<
 ;>>>>>   end variables here <<<<<

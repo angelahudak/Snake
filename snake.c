@@ -26,6 +26,7 @@ extern int GameLost;
 extern int GameWon;
 extern UInt32 AdSnakeQYRecord;
 extern UInt32 AdSnakeQXRecord;
+extern int Difficulty;
 
 //C Global variables
 int nextX;
@@ -56,6 +57,12 @@ setDifficulty - sets the difficulty of the game to 1, 2, or 3
 @return(s) - null void
 */
 void setDifficulty(int difficulty){
+	//1 - 10 Hz
+	//2 - 12 Hz
+	//3 - 15 Hz
+	if (difficulty == 1){Difficulty = 10;}
+	else if (difficulty == 2){Difficulty = 8;}
+	else if (difficulty == 3){Difficulty = 6;}
 }
 
 /*

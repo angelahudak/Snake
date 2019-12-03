@@ -12,15 +12,14 @@ typedef unsigned int UInt32;
 typedef unsigned short int UInt16;
 typedef unsigned char UInt8;
 
-/*assembly snake queue records*/
-extern UInt32	AdSnakeQYRecord;
-extern UInt32	AdSnakeQXRecord;
-
 /*assembly variables*/
 extern char Velocity;
 extern int GameActive;
 extern int GameWon;
 extern int GameLost;
+extern int Difficulty;
+extern UInt32 AdSnakeQYRecord;
+extern UInt32 AdSnakeQXRecord;
 
 /* assembly language subroutines */
 char GetCharI (void);
