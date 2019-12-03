@@ -1,6 +1,6 @@
 Dependencies for Project 'Snake', Target 'Target 1': (DO NOT MODIFY !)
-F (.\Exercise11_C.h)(0x5DE690F9)()
-F (.\snake.c)(0x5DE6963A)(--c99 -c --cpu Cortex-M0+ -g -O0 --apcs=interwork --split_sections-I.\RTE\_Target_1-IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.6.0\CMSIS\Core\Include-IC:\Keil_v5\ARM\PACK\Keil\Kinetis_KLxx_DFP\1.14.0\Device\Include-D__UVISION_VERSION="524" -D_RTE_ -DMKL46Z256xxx4-o .\objects\snake.o --omf_browse .\objects\snake.crf --depend .\objects\snake.d)
+F (.\Exercise11_C.h)(0x5DE69AF2)()
+F (.\snake.c)(0x5DE69B60)(--c99 -c --cpu Cortex-M0+ -g -O0 --apcs=interwork --split_sections-I.\RTE\_Target_1-IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.6.0\CMSIS\Core\Include-IC:\Keil_v5\ARM\PACK\Keil\Kinetis_KLxx_DFP\1.14.0\Device\Include-D__UVISION_VERSION="524" -D_RTE_ -DMKL46Z256xxx4-o .\objects\snake.o --omf_browse .\objects\snake.crf --depend .\objects\snake.d)
 I (C:\Keil_v5\ARM\PACK\Keil\Kinetis_KLxx_DFP\1.14.0\Device\Include\MKL46Z4.h)(0x585C24CA)
 I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.6.0\CMSIS\Core\Include\core_cm0plus.h)(0x5D264786)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x588C2C04)
@@ -8,11 +8,11 @@ I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.6.0\CMSIS\Core\Include\cmsis_version.h)(0x5D2
 I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.6.0\CMSIS\Core\Include\cmsis_compiler.h)(0x5D264786)
 I (C:\Keil_v5\ARM\PACK\ARM\CMSIS\5.6.0\CMSIS\Core\Include\cmsis_armcc.h)(0x5D264786)
 I (C:\Keil_v5\ARM\PACK\Keil\Kinetis_KLxx_DFP\1.14.0\Device\Include\system_MKL46Z4.h)(0x55FC1138)
-I (Exercise11_C.h)(0x5DE690F9)
+I (Exercise11_C.h)(0x5DE69AF2)
 I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x588C2C04)
 I (C:\Keil_v5\ARM\ARMCC\include\stdlib.h)(0x588C2C04)
 I (C:\Keil_v5\ARM\ARMCC\include\time.h)(0x588C2C04)
-F (.\snake.s)(0x5DE696D4)(--cpu Cortex-M0+ -g --apcs=interwork -I.\RTE\_Target_1-IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.6.0\CMSIS\Core\Include-IC:\Keil_v5\ARM\PACK\Keil\Kinetis_KLxx_DFP\1.14.0\Device\Include--pd "__UVISION_VERSION SETA 524" --pd "_RTE_ SETA 1" --pd "MKL46Z256xxx4 SETA 1"--list .\listings\snake.lst --xref -o .\objects\snake_1.o --depend .\objects\snake_1.d)
+F (.\snake.s)(0x5DE69ADC)(--cpu Cortex-M0+ -g --apcs=interwork -I.\RTE\_Target_1-IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.6.0\CMSIS\Core\Include-IC:\Keil_v5\ARM\PACK\Keil\Kinetis_KLxx_DFP\1.14.0\Device\Include--pd "__UVISION_VERSION SETA 524" --pd "_RTE_ SETA 1" --pd "MKL46Z256xxx4 SETA 1"--list .\listings\snake.lst --xref -o .\objects\snake_1.o --depend .\objects\snake_1.d)
 I (MKL46Z4.s)(0x5DE670F8)
 F (.\Custom_IO_Ex06.lib)(0x5DE670F8)()
 F (RTE\Device\MKL46Z256xxx4\startup_MKL46Z4.s)(0x5DE670F8)(--cpu Cortex-M0+ -g --apcs=interwork -I.\RTE\_Target_1-IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.6.0\CMSIS\Core\Include-IC:\Keil_v5\ARM\PACK\Keil\Kinetis_KLxx_DFP\1.14.0\Device\Include--pd "__UVISION_VERSION SETA 524" --pd "_RTE_ SETA 1" --pd "MKL46Z256xxx4 SETA 1"--list .\listings\startup_mkl46z4.lst --xref -o .\objects\startup_mkl46z4.o --depend .\objects\startup_mkl46z4.d)

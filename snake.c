@@ -235,6 +235,7 @@ void advanceTheSnake(char vel){
 /*********************************************************************/
 /*Main C Function */
 int main (void){
+	GameActive = FALSE;
     //initialize interrupts in critial region
     __asm("CPSID I");
     Init_UART0_IRQ();
@@ -243,9 +244,11 @@ int main (void){
 
     //present user instructions for PuTTy
     for (;;){/*main loop*/
+			
+			PutStringI("testing\n", MAX_STRING);
+		
 			//init game local variables
 			char userInput = 'A';
-			GameActive = FALSE;
 			
 			//prompt user for <enter> key
 			PutStringI("Please edit you PuTTy Terminal Settings:\n", MAX_STRING);						//row 22
@@ -287,7 +290,7 @@ int main (void){
 			//	   	 |_|<-cursor will return here																								//row 0
 			
 			//set variables
-			Velocity = 'D';
+			Velocity = 'd';
 			foodX = 39;
 			foodY = 10;
 			headX = 18;

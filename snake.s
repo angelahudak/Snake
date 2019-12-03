@@ -282,10 +282,6 @@ Init_PIT_IRQ	PROC	{R0-R13,LR}
 				LDR		R2,=PIT_TCTRL_CH_IE
 				STR		R2,[R0,#PIT_TCTRL_OFFSET]
 				
-				;clear PIT channel 0 interrupt
-				;LDR		R1,=PIT_TFLG_TIF_MASK
-				;STR		R1,[R0,#PIT_TFLG_OFFSET]
-				
 				POP		{R0-R7,PC}
 				ENDP
 ;################################################################
@@ -397,7 +393,7 @@ TestRDRF	LDR		R1,=UART0_BASE
 			LDRB	R2,[R1,#UART0_S1_OFFSET]
 			ANDS	R2,R2,R0
 			BEQ		ISRFin				;if(RDRF == '1')
-			
+;------------------------------------------------------------------------------------------------			
 			LDR		R3,=GameActive
 			LDRB	R3,[R3,#0]
 			CMP		R3,#TRUE
@@ -444,11 +440,10 @@ Ifd			CMP		R0,#'d'
 NormRecieve	LDRB	R0,[R1,#UART0_D_OFFSET];read a char from UART0 recieve register
 			LDR		R1,=QRecieveRecord
 			BL		Enqueue				;enqueue char to RXQueue
-
+;--------------------------------------------------------------------------------------------------------
 ISRFin		POP		{R4-R7}
 			CPSIE   I       			;unmask interupts
 
-			
 			POP		{R0-R7,PC}
 			ENDP
 ;################################################################
@@ -498,6 +493,16 @@ PutCharLoop CPSID   I       				;mask interupts
 ;################################################################
 Init_UART0_IRQ	   PROC {R0-R14}
 				   PUSH {R0-R3,LR}
+				   
+				   ;Init recieve and transmit queue
+				   LDR  R0,=QRecieveBuffer
+				   LDR	R1,=QRecieveRecord
+				   MOVS R2,#Q_BUF_SZ
+				   BL	InitQueue
+				   LDR  R0,=QTransmitBuffer
+				   LDR 	R1,=QTransmitRecord
+				   MOVS R2,#Q_BUF_SZ
+				   BL	InitQueue
 				   
 				   ;SELECT MCGPLLCLK / 2 AS UART0 CLOCK SOURCE
 				   LDR  R0,=SIM_SOPT2
@@ -583,16 +588,6 @@ Init_UART0_IRQ	   PROC {R0-R14}
 				   LDR R0,=UART0_C2_T_RI
 				   LDR R1,=UART0_C2
 				   STRB R0,[R1,#0]                   ;eanble recieve interrupt
-				   
-				   ;Init recieve and transmit queue
-				   LDR  R0,=QRecieveBuffer
-				   LDR	R1,=QRecieveRecord
-				   MOVS R2,#Q_BUF_SZ
-				   BL	InitQueue
-				   LDR  R0,=QTransmitBuffer
-				   LDR 	R1,=QTransmitRecord
-				   MOVS R2,#Q_BUF_SZ
-				   BL	InitQueue
 				   
 				   POP {R0-R3,PC}
 				   ENDP
