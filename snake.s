@@ -131,8 +131,8 @@ MAX_SNAKE EQU 864  ;18 x 48 => total # of possible occupied spaces
 			EXPORT	Velocity
 			EXPORT	GameWon
 			EXPORT	GameLost
-			EXPORT	SnakeQXRecord
-			EXPORT	SnakeQYRecord
+			EXPORT	AdSnakeQXRecord
+			EXPORT	AdSnakeQYRecord
 ;-----------------------------------------------------------------
 			;IMPORTS
 			IMPORT	advanceTheSnake
@@ -147,7 +147,41 @@ MAX_SNAKE EQU 864  ;18 x 48 => total # of possible occupied spaces
 ;################################################################
 InitSnakeQs		PROC	{R0-R13,LR}
 				PUSH	{R0-R3,LR}
+<<<<<<< HEAD
 	
+				;Init X Q
+				LDR		R0,=SnakeQXBuffer
+				LDR		R1,=SnakeQXRecord
+				MOVS	R2,#MAX_SNAKE
+				BL		InitQueue
+				
+				;initialize pointer variable for C99 code
+				LDR		R0,=AdSnakeQXRecord
+				STR		R1,[R0,#0]
+				
+				;Init Y Q
+				LDR		R0,=SnakeQYBuffer
+				LDR		R1,=SnakeQYRecord
+				MOVS	R2,#MAX_SNAKE
+				BL		InitQueue
+	
+				;initialiaze pointer variable for C99 code
+				LDR		R0,=AdSnakeQYRecord
+				STR		R0,[R1,#0]
+	
+=======
+				
+				LDR R0,=SnakeQXBuffer                     ;Snake X Buffer
+				LDR R1,=SnakeQXRecord                     ;Snake X Record
+				MOVS R2,#Q_BUF_SZ                         ;R2 size of 80
+				BL InitQueue                              ;Call InitQueue
+
+				LDR R0,=SnakeQYBuffer                     ;Snake Y Buffer
+				LDR R1,=SnakeQYRecord                     ;Snake Y Record
+				MOVS R2,#Q_BUF_SZ                         ;R2 size of 80
+				BL InitQueue                              ;Call InitQueue    
+				
+>>>>>>> 2743db10333f1973e4da8257b575962374f352f3
 				POP		{R0-R3,PC}
 				ENDP
 ;################################################################
@@ -158,18 +192,24 @@ InitSnakeQs		PROC	{R0-R13,LR}
 ;################################################################
 ReadSnakeQ		PROC	{R0-R13,LR}
 				PUSH	{R0-R3,LR}
-
-				;ToDo
+				
+				LDR R1, =QRecieveRecord      ;Receive the queue
+				LDRB R1, [R0, R0]            ;Load the value into a temp register at the offset of the index
+				STR R1, [R0, #0]             ;store that value into R0
 
 				POP	{R0-R3,PC}
 				ENDP
 ;################################################################
 ;ReadFirstQ -  reads the first byte in a queue without dequeuing it
 ; Input - R0 =QRecord
-; Output - R0 first byte in the queu
+; Output - R0 first byte in the queue
 ;################################################################
 ReadFirstQ		PROC	{R0-R13,LR}
 				PUSH	{R0-R3,LR}
+				
+				LDR R0, =QRecieveRecord      ;Recived the queue
+				LDRB R1, [R0, #0]            ;sends the first byte in the queue to a temp resistor
+				STRB R1, [R0, #0]            ;stores that first byte back into R0
 				
 				POP		{R0-R3,PC}
 				ENDP
@@ -816,6 +856,8 @@ Velocity		SPACE	1
 GameActive		SPACE	1
 GameWon			SPACE	1
 GameLost		SPACE	1
+AdSnakeQXRecord	SPACE	4
+AdSnakeQYRecord	SPACE	4
 			ALIGN
 ;>>>>> begin variables here <<<<<
 ;>>>>>   end variables here <<<<<

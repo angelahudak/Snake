@@ -24,8 +24,8 @@
 extern char Velocity;
 extern int GameLost;
 extern int GameWon;
-extern UInt32 SnakeQYRecord;
-extern UInt32 SnakeQXRecord;
+extern UInt32 AdSnakeQYRecord;
+extern UInt32 AdSnakeQXRecord;
 
 //C Global variables
 int nextX;

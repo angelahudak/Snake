@@ -13,8 +13,8 @@ typedef unsigned short int UInt16;
 typedef unsigned char UInt8;
 
 /*assembly snake queue records*/
-extern int	SnakeQYRecord;
-extern int	SnakeQXRecord;
+extern UInt32	AdSnakeQYRecord;
+extern UInt32	AdSnakeQXRecord;
 
 /*assembly variables*/
 extern char Velocity;
