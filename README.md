@@ -19,7 +19,7 @@
 
 ## Developers
 - _Gabriel Dombrowski_
-- _AngelHudak_
+- _Angela Hudak_
 
 ## Functionality
 1. When the program starts it wil instruct the user to modify the PuTTY Terminal settings to enable escape sequences.
