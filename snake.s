@@ -298,13 +298,43 @@ TestRDRF	LDR		R1,=UART0_BASE
 			LDRB	R3,[R3,#0]
 			CMP		R3,#TRUE
 			BNE		NormRecieve
+			
 			;if Snake is running
 			LDRB	R0,[R1,#UART0_D_OFFSET]
-			LDR		R1,=Velocity
+			CMP		R0,#0x41
+			BLT		NoConvert
+			SUBS	R0,R0,#UPPER_LOWER_SEPERATION	;convert to lower case if uppercase
+NoConvert	LDR		R1,=Velocity
 			LDRB	R2,[R1,#0]
-			;TODO: make sure 180 degree turns aren't possible
+			;R0 = user input
+			;R2 = current velocity
 			
-			STRB	R0,[R1,#0]
+Ifw			CMP		R0,#'w'
+			BNE		Ifa
+			CMP		R2,#'s'
+			BEQ		ISRFin			;prevent 180 insta-death
+			STRB	R0,[R1,#0]		;store new velocity
+			B		ISRFin
+			
+Ifa			CMP		R0,#'a'
+			BNE		Ifs
+			CMP		R2,#'d'
+			BEQ		ISRFin			;prevent 180 insta-death
+			STRB	R0,[R1,#0]		;store new velocity
+			B		ISRFin
+			
+Ifs			CMP		R0,#'s'
+			BNE		Ifd
+			CMP		R2,#'w'
+			BEQ		ISRFin			;prevent 180 insta-death
+			STRB	R0,[R1,#0]		;store new velocity
+			B		ISRFin
+			
+Ifd			CMP		R0,#'d'
+			BNE		ISRFin
+			CMP		R2,#'a'
+			BEQ		ISRFin			;prevent 180 insta-death
+			STRB	R0,[R1,#0]		;store new velocity
 			B		ISRFin
 			
 NormRecieve	LDRB	R0,[R1,#UART0_D_OFFSET];read a char from UART0 recieve register
