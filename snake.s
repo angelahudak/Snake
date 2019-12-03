@@ -125,6 +125,8 @@ MAX_SNAKE EQU 864  ;18 x 48 => total # of possible occupied spaces
 			EXPORT	ReadSnakeQ
 			EXPORT  ReadFirstQ
 			EXPORT	InitSnakeQs
+			EXPORT	Dequeue
+			EXPORT	Enqueue
 				
 			;variables
 			EXPORT	GameActive
@@ -137,7 +139,7 @@ MAX_SNAKE EQU 864  ;18 x 48 => total # of possible occupied spaces
 ;-----------------------------------------------------------------
 			;IMPORTS
 			IMPORT	advanceTheSnake
-			IMPORT	nextSpaveValid
+			IMPORT	nextSpaceValid
 			IMPORT	snakeLength
 			
 ;-----------------------------------------------------------------
@@ -153,7 +155,8 @@ InitSnakeQs		PROC	{R0-R13,LR}
 				;Init X Q
 				LDR		R0,=SnakeQXBuffer
 				LDR		R1,=SnakeQXRecord
-				MOVS	R2,#MAX_SNAKE
+				LDR		R2,=MAX_SNAKE
+				LDR		R2,[R2,#0]
 				BL		InitQueue
 				
 				;initialize pointer variable for C99 code
@@ -163,7 +166,8 @@ InitSnakeQs		PROC	{R0-R13,LR}
 				;Init Y Q
 				LDR		R0,=SnakeQYBuffer
 				LDR		R1,=SnakeQYRecord
-				MOVS	R2,#MAX_SNAKE
+				LDR		R2,=MAX_SNAKE
+				LDR 	R2,[R2,#0]
 				BL		InitQueue
 	
 				;initialiaze pointer variable for C99 code
@@ -181,7 +185,7 @@ InitSnakeQs		PROC	{R0-R13,LR}
 ReadSnakeQ		PROC	{R0-R13,LR}
 				PUSH	{R0-R4,LR}
 				
-				LDRB	R2,[R1,#BUF_SZ]
+				LDRB	R2,[R1,#BUF_SIZE]
 				CMP		R0,R2
 				BGE		EndReadSnakeQ
 				
@@ -199,7 +203,7 @@ ReadWhileLoop	CMP		R0,R2
 				
 ReadIf			CMP		R4,R3			;if (current address = buffer past){curretn address = buf start, increment dummy coutner}
 				BNE		ReadElse
-				LDR		R4,[R1,BUF_STRT}
+				LDR		R4,[R1,#BUF_STRT]
 				ADDS	R2,R2,#1
 				B		ReadWhileLoop
 				
@@ -315,12 +319,15 @@ PIT_IRQHandler	PROC	{R0-R13,LR}
 				LDRB	R0,[R0,#0]
 				BL		nextSpaceValid
 				CMP		R0,#FALSE
-				BEQ		GameLost			;check for game loss states
+				BEQ		GameLostState		;check for game loss states
 				
 				LDR		R0,=snakeLength
 				LDRB	R0,[R0,#0]
-				CMP		R0,#MAX_SNAKE
-				BEQ		GameWon				;check for game won states
+				LDR		R1,=MAX_SNAKE
+				LDR 	R1,[R1,#0]
+				BL		DIVU
+				CMP		R1,#1
+				BEQ		GameWonState		;check for game won states
 				
 				LDR		R0,=Velocity
 				LDRB	R0,[R0,#0]
@@ -328,17 +335,17 @@ PIT_IRQHandler	PROC	{R0-R13,LR}
 				
 				B		ClearInterrupt
 				
-GameLost		LDR		R0,=GameLost
+GameLostState	LDR		R0,=GameLost
 				MOVS	R1,#TRUE
 				STRB	R1,[R0,#0]
 				B		ClearInterrupt
 				
-GameWon			LDR		R0,=GameWon
+GameWonState	LDR		R0,=GameWon
 				MOVS	R1,#TRUE
 				STRB	R1,[R0,#0]
 				B		ClearInterrupt
 				
-Norefresh		ADDS	R0,R0,#1
+NoRefresh		ADDS	R0,R0,#1
 				LDR		R1,=PITCounter
 				STRB	R0,[R1,#0]
 				
@@ -400,7 +407,7 @@ TestRDRF	LDR		R1,=UART0_BASE
 			LDRB	R0,[R1,#UART0_D_OFFSET]
 			CMP		R0,#0x41
 			BLT		NoConvert
-			SUBS	R0,R0,#UPPER_LOWER_SEPERATION	;convert to lower case if uppercase
+			SUBS	R0,R0,#LOWER_UPPER_SEPERATION	;convert to lower case if uppercase
 NoConvert	LDR		R1,=Velocity
 			LDRB	R2,[R1,#0]
 			;R0 = user input

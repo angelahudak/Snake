@@ -226,7 +226,10 @@ void advanceTheSnake(char vel){
 		tailX = ReadFirstQ(AdSnakeQXRecord);
 		tailY = ReadFirstQ(AdSnakeQYRecord);
 	}
-	else if (nextX == foodX && nextY == foodY) {snakeLength ++;}
+	else if (nextX == foodX && nextY == foodY) {
+		snakeLength ++;
+		spawnFood();
+	}
 }
 
 /*********************************************************************/
