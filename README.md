@@ -57,9 +57,9 @@
 - [x] PutCharI
 - [x] PutStringI
 - [x] NewLineI
-- [ ] ReadFirstQ
-- [ ] ReadSnakeQ
-- [ ] InitSnakeQs
+- [x] ReadFirstQ
+- [x] ReadSnakeQ
+- [x] InitSnakeQs
 
 ## Enhancements
     Appart from the Minimum Viable Product our development team is working on adding the following 
