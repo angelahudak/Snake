@@ -127,6 +127,7 @@ MAX_SNAKE EQU 864  ;18 x 48 => total # of possible occupied spaces
 			EXPORT	InitSnakeQs
 			EXPORT	Dequeue
 			EXPORT	Enqueue
+			EXPORT  TXQEmpty
 				
 			;variables
 			EXPORT	GameActive
@@ -140,10 +141,29 @@ MAX_SNAKE EQU 864  ;18 x 48 => total # of possible occupied spaces
 			;IMPORTS
 			IMPORT	advanceTheSnake
 			IMPORT	nextSpaceValid
-			IMPORT	snakeLength
-			
+			IMPORT	snakeLength			
 ;-----------------------------------------------------------------
 ;>>>>> begin subroutine code <<<<<
+;################################################################
+;TXQEmpty - boolean check if the transmit Q is empty
+;	Input - null
+;	Output - R0 - boolean is the transmit queue empty
+;################################################################
+TXQEmpty		PROC	{R1-R13,LR}
+				PUSH	{R1-R3,LR}
+				
+				LDR		R0,=QTransmitRecord
+				LDRB	R0,[R0,#NUM_ENQD]
+				
+ReturnFalse		CMP		R0,#0
+				BNE		ReturnFalse
+				MOVS	R0,#TRUE
+				B		EndTXQEmpty
+				
+ReturnTrue		MOVS	R0,#FALSE		
+								
+EndTXQEmpty		POP		{R1-R3,PC}
+				ENDP
 ;################################################################
 ;InitSnakeQs - initializes the both X and Y snake queues for the game
 ;	Input - null
@@ -912,8 +932,11 @@ SnakeQYBuffer	SPACE	MAX_SNAKE
 ;			ALIGN
 ;StackRRecord	SPACE	STACK_REC_SZ
 Velocity		SPACE	1
+			ALIGN
 GameActive		SPACE	1
+			ALIGN
 GameWon			SPACE	1
+			ALIGN
 GameLost		SPACE	1
 AdSnakeQXRecord	SPACE	4
 AdSnakeQYRecord	SPACE	4

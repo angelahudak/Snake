@@ -33,7 +33,7 @@ Section Cross References
     snake.o(i.spawnFood) refers to snake.o(.data) for upperLimitX
     snake_1.o(MyCode) refers to snake.o(i.nextSpaceValid) for nextSpaceValid
     snake_1.o(MyCode) refers to snake.o(i.advanceTheSnake) for advanceTheSnake
-    snake_1.o(MyCode) refers to snake_1.o(MyData) for SnakeQXBuffer
+    snake_1.o(MyCode) refers to snake_1.o(MyData) for QTransmitRecord
     snake_1.o(MyCode) refers to snake.o(.data) for snakeLength
     startup_mkl46z4.o(STACK) refers (Special) to heapauxi.o(.text) for __use_two_region_memory
     startup_mkl46z4.o(HEAP) refers (Special) to heapauxi.o(.text) for __use_two_region_memory
@@ -310,19 +310,19 @@ Image Symbol Table
     .text                                    0x000003ba   Section        0  indicate_semi.o(.text)
     .text                                    0x000003ba   Section        0  __dczerorl.o(.text)
     .ARM.__at_0x400                          0x00000400   Section       16  startup_mkl46z4.o(.ARM.__at_0x400)
-    MyCode                                   0x00000410   Section     1168  snake_1.o(MyCode)
-    InitQueue                                0x0000064b   Thumb Code    20  snake_1.o(MyCode)
-    i.SystemInit                             0x000008a0   Section        0  system_mkl46z4.o(i.SystemInit)
-    i.advanceTheSnake                        0x00000970   Section        0  snake.o(i.advanceTheSnake)
-    i.checkFood                              0x00000ab4   Section        0  snake.o(i.checkFood)
-    i.enqueueNewSnakePos                     0x00000af4   Section        0  snake.o(i.enqueueNewSnakePos)
-    i.main                                   0x00000b20   Section        0  snake.o(i.main)
-    i.nextSpaceValid                         0x00000edc   Section        0  snake.o(i.nextSpaceValid)
-    i.printChar                              0x00001084   Section        0  snake.o(i.printChar)
-    i.setDifficulty                          0x000010e8   Section        0  snake.o(i.setDifficulty)
-    i.spawnFood                              0x00001110   Section        0  snake.o(i.spawnFood)
+    MyCode                                   0x00000410   Section     1192  snake_1.o(MyCode)
+    InitQueue                                0x0000065d   Thumb Code    20  snake_1.o(MyCode)
+    i.SystemInit                             0x000008b8   Section        0  system_mkl46z4.o(i.SystemInit)
+    i.advanceTheSnake                        0x00000988   Section        0  snake.o(i.advanceTheSnake)
+    i.checkFood                              0x00000acc   Section        0  snake.o(i.checkFood)
+    i.enqueueNewSnakePos                     0x00000b0c   Section        0  snake.o(i.enqueueNewSnakePos)
+    i.main                                   0x00000b38   Section        0  snake.o(i.main)
+    i.nextSpaceValid                         0x00000f24   Section        0  snake.o(i.nextSpaceValid)
+    i.printChar                              0x000010cc   Section        0  snake.o(i.printChar)
+    i.setDifficulty                          0x00001130   Section        0  snake.o(i.setDifficulty)
+    i.spawnFood                              0x00001158   Section        0  snake.o(i.spawnFood)
     .data                                    0x1fffe000   Section       56  snake.o(.data)
-    MyData                                   0x1fffe038   Section     1984  snake_1.o(MyData)
+    MyData                                   0x1fffe038   Section     1992  snake_1.o(MyData)
     QRecieveBuffer                           0x1fffe038   Data          80  snake_1.o(MyData)
     QRecieveRecord                           0x1fffe088   Data          18  snake_1.o(MyData)
     QTransmitBuffer                          0x1fffe09c   Data          80  snake_1.o(MyData)
@@ -331,14 +331,14 @@ Image Symbol Table
     SnakeQXBuffer                            0x1fffe114   Data         864  snake_1.o(MyData)
     SnakeQYRecord                            0x1fffe474   Data          18  snake_1.o(MyData)
     SnakeQYBuffer                            0x1fffe488   Data         864  snake_1.o(MyData)
-    PITCounter                               0x1fffe7f5   Data           1  snake_1.o(MyData)
-    .bss                                     0x1fffe7f8   Section      228  rand.o(.bss)
-    .bss                                     0x1fffe8dc   Section       96  libspace.o(.bss)
-    HEAP                                     0x1fffe940   Section        0  startup_mkl46z4.o(HEAP)
-    STACK                                    0x1fffe940   Section      256  startup_mkl46z4.o(STACK)
-    Heap_Mem                                 0x1fffe940   Data           0  startup_mkl46z4.o(HEAP)
-    Stack_Mem                                0x1fffe940   Data         256  startup_mkl46z4.o(STACK)
-    __initial_sp                             0x1fffea40   Data           0  startup_mkl46z4.o(STACK)
+    PITCounter                               0x1fffe7fe   Data           1  snake_1.o(MyData)
+    .bss                                     0x1fffe800   Section      228  rand.o(.bss)
+    .bss                                     0x1fffe8e4   Section       96  libspace.o(.bss)
+    HEAP                                     0x1fffe948   Section        0  startup_mkl46z4.o(HEAP)
+    STACK                                    0x1fffe948   Section      256  startup_mkl46z4.o(STACK)
+    Heap_Mem                                 0x1fffe948   Data           0  startup_mkl46z4.o(HEAP)
+    Stack_Mem                                0x1fffe948   Data         256  startup_mkl46z4.o(STACK)
+    __initial_sp                             0x1fffea48   Data           0  startup_mkl46z4.o(STACK)
 
     Global Symbols
 
@@ -483,33 +483,34 @@ Image Symbol Table
     __decompress                             0x000003bb   Thumb Code     0  __dczerorl.o(.text)
     __decompress0                            0x000003bb   Thumb Code    58  __dczerorl.o(.text)
     __semihosting_library_function           0x000003bb   Thumb Code     0  indicate_semi.o(.text)
-    InitSnakeQs                              0x00000411   Thumb Code    36  snake_1.o(MyCode)
-    ReadSnakeQ                               0x00000435   Thumb Code    36  snake_1.o(MyCode)
-    ReadFirstQ                               0x00000459   Thumb Code     8  snake_1.o(MyCode)
-    Init_PIT_IRQ                             0x00000461   Thumb Code    62  snake_1.o(MyCode)
-    PIT_IRQHandler                           0x0000049f   Thumb Code   100  snake_1.o(MyCode)
-    UART0_IRQHandler                         0x00000503   Thumb Code   140  snake_1.o(MyCode)
-    GetCharI                                 0x0000058f   Thumb Code    16  snake_1.o(MyCode)
-    PutCharI                                 0x0000059f   Thumb Code    22  snake_1.o(MyCode)
-    Init_UART0_IRQ                           0x000005b5   Thumb Code   150  snake_1.o(MyCode)
-    Dequeue                                  0x0000065f   Thumb Code    64  snake_1.o(MyCode)
-    Enqueue                                  0x0000069f   Thumb Code    68  snake_1.o(MyCode)
-    PutStringI                               0x000006e3   Thumb Code    20  snake_1.o(MyCode)
-    PutNumHexI                               0x000006f7   Thumb Code    64  snake_1.o(MyCode)
-    NewLineI                                 0x00000737   Thumb Code    16  snake_1.o(MyCode)
-    PutNumI                                  0x00000747   Thumb Code    52  snake_1.o(MyCode)
-    DIVU                                     0x0000077b   Thumb Code    62  snake_1.o(MyCode)
-    SystemInit                               0x000008a1   Thumb Code   180  system_mkl46z4.o(i.SystemInit)
-    advanceTheSnake                          0x00000971   Thumb Code   272  snake.o(i.advanceTheSnake)
-    checkFood                                0x00000ab5   Thumb Code    54  snake.o(i.checkFood)
-    enqueueNewSnakePos                       0x00000af5   Thumb Code    28  snake.o(i.enqueueNewSnakePos)
-    main                                     0x00000b21   Thumb Code   480  snake.o(i.main)
-    nextSpaceValid                           0x00000edd   Thumb Code   390  snake.o(i.nextSpaceValid)
-    printChar                                0x00001085   Thumb Code    80  snake.o(i.printChar)
-    setDifficulty                            0x000010e9   Thumb Code    36  snake.o(i.setDifficulty)
-    spawnFood                                0x00001111   Thumb Code   104  snake.o(i.spawnFood)
-    Region$$Table$$Base                      0x00001190   Number         0  anon$$obj.o(Region$$Table)
-    Region$$Table$$Limit                     0x000011b0   Number         0  anon$$obj.o(Region$$Table)
+    TXQEmpty                                 0x00000411   Thumb Code    18  snake_1.o(MyCode)
+    InitSnakeQs                              0x00000423   Thumb Code    36  snake_1.o(MyCode)
+    ReadSnakeQ                               0x00000447   Thumb Code    36  snake_1.o(MyCode)
+    ReadFirstQ                               0x0000046b   Thumb Code     8  snake_1.o(MyCode)
+    Init_PIT_IRQ                             0x00000473   Thumb Code    62  snake_1.o(MyCode)
+    PIT_IRQHandler                           0x000004b1   Thumb Code   100  snake_1.o(MyCode)
+    UART0_IRQHandler                         0x00000515   Thumb Code   140  snake_1.o(MyCode)
+    GetCharI                                 0x000005a1   Thumb Code    16  snake_1.o(MyCode)
+    PutCharI                                 0x000005b1   Thumb Code    22  snake_1.o(MyCode)
+    Init_UART0_IRQ                           0x000005c7   Thumb Code   150  snake_1.o(MyCode)
+    Dequeue                                  0x00000671   Thumb Code    64  snake_1.o(MyCode)
+    Enqueue                                  0x000006b1   Thumb Code    68  snake_1.o(MyCode)
+    PutStringI                               0x000006f5   Thumb Code    20  snake_1.o(MyCode)
+    PutNumHexI                               0x00000709   Thumb Code    64  snake_1.o(MyCode)
+    NewLineI                                 0x00000749   Thumb Code    16  snake_1.o(MyCode)
+    PutNumI                                  0x00000759   Thumb Code    52  snake_1.o(MyCode)
+    DIVU                                     0x0000078d   Thumb Code    62  snake_1.o(MyCode)
+    SystemInit                               0x000008b9   Thumb Code   180  system_mkl46z4.o(i.SystemInit)
+    advanceTheSnake                          0x00000989   Thumb Code   272  snake.o(i.advanceTheSnake)
+    checkFood                                0x00000acd   Thumb Code    54  snake.o(i.checkFood)
+    enqueueNewSnakePos                       0x00000b0d   Thumb Code    28  snake.o(i.enqueueNewSnakePos)
+    main                                     0x00000b39   Thumb Code   502  snake.o(i.main)
+    nextSpaceValid                           0x00000f25   Thumb Code   390  snake.o(i.nextSpaceValid)
+    printChar                                0x000010cd   Thumb Code    80  snake.o(i.printChar)
+    setDifficulty                            0x00001131   Thumb Code    36  snake.o(i.setDifficulty)
+    spawnFood                                0x00001159   Thumb Code   104  snake.o(i.spawnFood)
+    Region$$Table$$Base                      0x000011d8   Number         0  anon$$obj.o(Region$$Table)
+    Region$$Table$$Limit                     0x000011f8   Number         0  anon$$obj.o(Region$$Table)
     nextX                                    0x1fffe000   Data           4  snake.o(.data)
     nextY                                    0x1fffe004   Data           4  snake.o(.data)
     foodX                                    0x1fffe008   Data           4  snake.o(.data)
@@ -528,15 +529,15 @@ Image Symbol Table
     WALL                                     0x1fffe036   Data           1  snake.o(.data)
     NOTHING                                  0x1fffe037   Data           1  snake.o(.data)
     Velocity                                 0x1fffe7e8   Data           1  snake_1.o(MyData)
-    GameActive                               0x1fffe7e9   Data           1  snake_1.o(MyData)
-    GameWon                                  0x1fffe7ea   Data           1  snake_1.o(MyData)
-    GameLost                                 0x1fffe7eb   Data           1  snake_1.o(MyData)
-    AdSnakeQXRecord                          0x1fffe7ec   Data           4  snake_1.o(MyData)
-    AdSnakeQYRecord                          0x1fffe7f0   Data           4  snake_1.o(MyData)
-    Difficulty                               0x1fffe7f4   Data           1  snake_1.o(MyData)
-    _random_number_data                      0x1fffe7f8   Data         228  rand.o(.bss)
-    __libspace_start                         0x1fffe8dc   Data          96  libspace.o(.bss)
-    __temporary_stack_top$libspace           0x1fffe93c   Data           0  libspace.o(.bss)
+    GameActive                               0x1fffe7ec   Data           1  snake_1.o(MyData)
+    GameWon                                  0x1fffe7f0   Data           1  snake_1.o(MyData)
+    GameLost                                 0x1fffe7f4   Data           1  snake_1.o(MyData)
+    AdSnakeQXRecord                          0x1fffe7f5   Data           4  snake_1.o(MyData)
+    AdSnakeQYRecord                          0x1fffe7f9   Data           4  snake_1.o(MyData)
+    Difficulty                               0x1fffe7fd   Data           1  snake_1.o(MyData)
+    _random_number_data                      0x1fffe800   Data         228  rand.o(.bss)
+    __libspace_start                         0x1fffe8e4   Data          96  libspace.o(.bss)
+    __temporary_stack_top$libspace           0x1fffe944   Data           0  libspace.o(.bss)
 
 
 
@@ -546,9 +547,9 @@ Memory Map of the image
 
   Image Entry point : 0x000000c1
 
-  Load Region LR_IROM1 (Base: 0x00000000, Size: 0x000019a8, Max: 0x00040000, ABSOLUTE, COMPRESSED[0x000011d0])
+  Load Region LR_IROM1 (Base: 0x00000000, Size: 0x000019f8, Max: 0x00040000, ABSOLUTE, COMPRESSED[0x00001218])
 
-    Execution Region ER_IROM1 (Exec base: 0x00000000, Load base: 0x00000000, Size: 0x000011b0, Max: 0x00040000, ABSOLUTE)
+    Execution Region ER_IROM1 (Exec base: 0x00000000, Load base: 0x00000000, Size: 0x000011f8, Max: 0x00040000, ABSOLUTE)
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
@@ -614,30 +615,30 @@ Memory Map of the image
     0x000003ba   0x000003ba   0x0000003a   Code   RO          336    .text               c_p.l(__dczerorl.o)
     0x000003f4   0x000003f4   0x0000000c   PAD
     0x00000400   0x00000400   0x00000010   Code   RO          113    .ARM.__at_0x400     startup_mkl46z4.o
-    0x00000410   0x00000410   0x00000490   Code   RO          104    MyCode              snake_1.o
-    0x000008a0   0x000008a0   0x000000d0   Code   RO          123    i.SystemInit        system_mkl46z4.o
-    0x00000970   0x00000970   0x00000144   Code   RO            3    i.advanceTheSnake   snake.o
-    0x00000ab4   0x00000ab4   0x00000040   Code   RO            4    i.checkFood         snake.o
-    0x00000af4   0x00000af4   0x0000002c   Code   RO            5    i.enqueueNewSnakePos  snake.o
-    0x00000b20   0x00000b20   0x000003bc   Code   RO            6    i.main              snake.o
-    0x00000edc   0x00000edc   0x000001a8   Code   RO            7    i.nextSpaceValid    snake.o
-    0x00001084   0x00001084   0x00000064   Code   RO            8    i.printChar         snake.o
-    0x000010e8   0x000010e8   0x00000028   Code   RO            9    i.setDifficulty     snake.o
-    0x00001110   0x00001110   0x00000080   Code   RO           10    i.spawnFood         snake.o
-    0x00001190   0x00001190   0x00000020   Data   RO          334    Region$$Table       anon$$obj.o
+    0x00000410   0x00000410   0x000004a8   Code   RO          104    MyCode              snake_1.o
+    0x000008b8   0x000008b8   0x000000d0   Code   RO          123    i.SystemInit        system_mkl46z4.o
+    0x00000988   0x00000988   0x00000144   Code   RO            3    i.advanceTheSnake   snake.o
+    0x00000acc   0x00000acc   0x00000040   Code   RO            4    i.checkFood         snake.o
+    0x00000b0c   0x00000b0c   0x0000002c   Code   RO            5    i.enqueueNewSnakePos  snake.o
+    0x00000b38   0x00000b38   0x000003ec   Code   RO            6    i.main              snake.o
+    0x00000f24   0x00000f24   0x000001a8   Code   RO            7    i.nextSpaceValid    snake.o
+    0x000010cc   0x000010cc   0x00000064   Code   RO            8    i.printChar         snake.o
+    0x00001130   0x00001130   0x00000028   Code   RO            9    i.setDifficulty     snake.o
+    0x00001158   0x00001158   0x00000080   Code   RO           10    i.spawnFood         snake.o
+    0x000011d8   0x000011d8   0x00000020   Data   RO          334    Region$$Table       anon$$obj.o
 
 
-    Execution Region RW_IRAM1 (Exec base: 0x1fffe000, Load base: 0x000011b0, Size: 0x00000a40, Max: 0x00008000, ABSOLUTE, COMPRESSED[0x00000020])
+    Execution Region RW_IRAM1 (Exec base: 0x1fffe000, Load base: 0x000011f8, Size: 0x00000a48, Max: 0x00008000, ABSOLUTE, COMPRESSED[0x00000020])
 
     Exec Addr    Load Addr    Size         Type   Attr      Idx    E Section Name        Object
 
     0x1fffe000   COMPRESSED   0x00000038   Data   RW           11    .data               snake.o
-    0x1fffe038   COMPRESSED   0x000007c0   Data   RW          106    MyData              snake_1.o
-    0x1fffe7f8        -       0x000000e4   Zero   RW          158    .bss                c_p.l(rand.o)
-    0x1fffe8dc        -       0x00000060   Zero   RW          262    .bss                c_p.l(libspace.o)
-    0x1fffe93c   COMPRESSED   0x00000004   PAD
-    0x1fffe940        -       0x00000000   Zero   RW          111    HEAP                startup_mkl46z4.o
-    0x1fffe940        -       0x00000100   Zero   RW          110    STACK               startup_mkl46z4.o
+    0x1fffe038   COMPRESSED   0x000007c8   Data   RW          106    MyData              snake_1.o
+    0x1fffe800        -       0x000000e4   Zero   RW          158    .bss                c_p.l(rand.o)
+    0x1fffe8e4        -       0x00000060   Zero   RW          262    .bss                c_p.l(libspace.o)
+    0x1fffe944   COMPRESSED   0x00000004   PAD
+    0x1fffe948        -       0x00000000   Zero   RW          111    HEAP                startup_mkl46z4.o
+    0x1fffe948        -       0x00000100   Zero   RW          110    STACK               startup_mkl46z4.o
 
 
 ==============================================================================
@@ -647,13 +648,13 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   Object Name
 
-      2080        636          0         56          0       7049   snake.o
-      1168        232          0       1984          0       1572   snake_1.o
+      2128        662          0         56          0       7073   snake.o
+      1192        238          0       1992          0       1672   snake_1.o
         68         38        192          0        256        896   startup_mkl46z4.o
        208         28          0          0          0        549   system_mkl46z4.o
 
     ----------------------------------------------------------------------
-      3524        934        224       2040        256      10066   Object Totals
+      3596        966        224       2048        256      10190   Object Totals
          0          0         32          0          0          0   (incl. Generated)
          0          0          0          0          0          0   (incl. Padding)
 
@@ -704,15 +705,15 @@ Image component sizes
 
       Code (inc. data)   RO Data    RW Data    ZI Data      Debug   
 
-      4304        966        224       2040        584      10318   Grand Totals
-      4304        966        224         32        584      10318   ELF Image Totals (compressed)
-      4304        966        224         32          0          0   ROM Totals
+      4376        998        224       2048        584      10442   Grand Totals
+      4376        998        224         32        584      10442   ELF Image Totals (compressed)
+      4376        998        224         32          0          0   ROM Totals
 
 ==============================================================================
 
-    Total RO  Size (Code + RO Data)                 4528 (   4.42kB)
-    Total RW  Size (RW Data + ZI Data)              2624 (   2.56kB)
-    Total ROM Size (Code + RO Data + RW Data)       4560 (   4.45kB)
+    Total RO  Size (Code + RO Data)                 4600 (   4.49kB)
+    Total RW  Size (RW Data + ZI Data)              2632 (   2.57kB)
+    Total ROM Size (Code + RO Data + RW Data)       4632 (   4.52kB)
 
 ==============================================================================
 

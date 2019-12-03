@@ -14,10 +14,10 @@ typedef unsigned char UInt8;
 
 /*assembly variables*/
 extern char Velocity;
-extern int GameActive;
-extern int GameWon;
-extern int GameLost;
-extern int Difficulty;
+extern Int8 GameActive;
+extern Int8 GameWon;
+extern Int8 GameLost;
+extern Int8 Difficulty;
 extern UInt32 AdSnakeQYRecord;
 extern UInt32 AdSnakeQXRecord;
 
@@ -36,3 +36,4 @@ void Enqueue(Int8 byte, UInt32 address);
 Int8 ReadSnakeQ(Int8 byte, UInt32 address);
 Int8 ReadFirstQ(UInt32 address);
 void InitSnakeQs(void);
+int TXQEmpty(void);

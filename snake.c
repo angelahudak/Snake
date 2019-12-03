@@ -22,11 +22,11 @@
 /*Global variables*/
 //ARM Global variables
 extern char Velocity;
-extern int GameLost;
-extern int GameWon;
+extern Int8 GameLost;
+extern Int8 GameWon;
 extern UInt32 AdSnakeQYRecord;
 extern UInt32 AdSnakeQXRecord;
-extern int Difficulty;
+extern Int8 Difficulty;
 
 //C Global variables
 int nextX;
@@ -243,58 +243,67 @@ int main (void){
     __asm("CPSIE I");
 
     //present user instructions for PuTTy
-    for (;;){/*main loop*/
-			
-			PutStringI("testing\n", MAX_STRING);
-		
+    while (TRUE){/*main loop*/
 			//init game local variables
 			char userInput = 'A';
 			
 			//prompt user for <enter> key
-			PutStringI("Please edit you PuTTy Terminal Settings:\n", MAX_STRING);						//row 22
-			PutStringI("Right-Click/Change Settings.../Terminal/Force Off x2\n", MAX_STRING);			//row 21
+			PutStringI("Please edit you PuTTy Terminal Settings:\n\r", MAX_STRING);						//row 22
+			PutStringI("Right-Click/Change Settings.../Terminal/Force Off x2\n\r", MAX_STRING);			//row 21
 	    
 			//difficulty computation
-			PutStringI("Press >1< >2< or >3< to slect your difficulty\n", MAX_STRING);					//row 20
+			PutStringI("Press >1<, >2<, or >3< to slect your difficulty", MAX_STRING);				    //row 20
 			while (!(userInput == '1' || userInput == '2' || userInput == '3')){
 				userInput = GetCharI();
 			}
+			PutStringI("\n\rDifficulty set to:", MAX_STRING);
+			PutCharI(userInput);
+			NewLineI();
 			setDifficulty(userInput - 48);
 			
 			//wait for user >enter< loop
-			PutStringI("Press the <enter> key to play Snake\n", MAX_STRING);							//row 19			
+			PutStringI("Press the <enter> key to play Snake\n\r", MAX_STRING);							//row 19			
 			while (!(userInput == 0x0D)){
 				userInput = GetCharI();
 			}
 			//print board
 			//starting snake coordinates
 			//Column:   0123456789...
-			PutStringI("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n", MAX_STRING); 			//row 18
-			PutStringI("X                                                X\n", MAX_STRING); 			//row 17
-			PutStringI("X                                                X\n", MAX_STRING); 			//row 16
-			PutStringI("X                                                X\n", MAX_STRING); 			//row 15
-			PutStringI("X                                                X\n", MAX_STRING); 			//row 14
-			PutStringI("X                                                X\n", MAX_STRING); 			//row 13
-			PutStringI("X                                                X\n", MAX_STRING); 			//row 12
-			PutStringI("X                                                X\n", MAX_STRING); 			//row 11
-			PutStringI("X              ###                    O          X\n", MAX_STRING); 			//row 10
-			PutStringI("X                                                X\n", MAX_STRING); 			//row 9
-			PutStringI("X                                                X\n", MAX_STRING); 			//row 8
-			PutStringI("X                                                X\n", MAX_STRING); 			//row 7
-			PutStringI("X                                                X\n", MAX_STRING); 			//row 6
-			PutStringI("X                                                X\n", MAX_STRING); 			//row 5
-			PutStringI("X                                                X\n", MAX_STRING); 			//row 4
-			PutStringI("X                                                X\n", MAX_STRING); 			//row 3
-			PutStringI("X                                                X\n", MAX_STRING); 			//row 2
-			PutStringI("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n", MAX_STRING); 			//row 1
-			//	   	 |_|<-cursor will return here																								//row 0
+			PutStringI("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n\r", MAX_STRING); 			//row 18
+			PutStringI("X                                                X\n\r", MAX_STRING); 			//row 17
+			PutStringI("X                                                X\n\r", MAX_STRING); 			//row 16
+			PutStringI("X                                                X\n\r", MAX_STRING); 			//row 15
+			PutStringI("X                                                X\n\r", MAX_STRING); 			//row 14
+			PutStringI("X                                                X\n\r", MAX_STRING); 			//row 13
+			PutStringI("X                                                X\n\r", MAX_STRING); 			//row 12
+			PutStringI("X                                                X\n\r", MAX_STRING); 			//row 11
+			PutStringI("X              ###                    O          X\n\r", MAX_STRING); 			//row 10
+			PutStringI("X                                                X\n\r", MAX_STRING); 			//row 9
+			PutStringI("X                                                X\n\r", MAX_STRING); 			//row 8
+			PutStringI("X                                                X\n\r", MAX_STRING); 			//row 7
+			PutStringI("X                                                X\n\r", MAX_STRING); 			//row 6
+			PutStringI("X                                                X\n\r", MAX_STRING); 			//row 5
+			PutStringI("X                                                X\n\r", MAX_STRING); 			//row 4
+			PutStringI("X                                                X\n\r", MAX_STRING); 			//row 3
+			PutStringI("X                                                X\n\r", MAX_STRING); 			//row 2
+			PutStringI("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n\r", MAX_STRING); 			//row 1
+			///////////|_|<-cursor will return here														//row 0
+			
+			//wait until the transmit queue is empty
+			while (TXQEmpty() == FALSE);
 			
 			//set variables
 			Velocity = 'd';
-			foodX = 39;
+			
+			//init food variables
+			foodX = 38;
 			foodY = 10;
+			
+			//Init head variables
 			headX = 18;
 			headY = 10;
+			
+			//Init tail variables
 			tailX = 15;
 			tailY = 10;
 			
