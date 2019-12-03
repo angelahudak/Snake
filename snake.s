@@ -147,7 +147,17 @@ MAX_SNAKE EQU 864  ;18 x 48 => total # of possible occupied spaces
 ;################################################################
 InitSnakeQs		PROC	{R0-R13,LR}
 				PUSH	{R0-R3,LR}
-	
+				
+				LDR R0,=SnakeQXBuffer                     ;Snake X Buffer
+				LDR R1,=SnakeQXRecord                     ;Snake X Record
+				MOVS R2,#Q_BUF_SZ                         ;R2 size of 80
+				BL InitQueue                              ;Call InitQueue
+
+				LDR R0,=SnakeQYBuffer                     ;Snake Y Buffer
+				LDR R1,=SnakeQYRecord                     ;Snake Y Record
+				MOVS R2,#Q_BUF_SZ                         ;R2 size of 80
+				BL InitQueue                              ;Call InitQueue    
+				
 				POP		{R0-R3,PC}
 				ENDP
 ;################################################################
@@ -158,18 +168,24 @@ InitSnakeQs		PROC	{R0-R13,LR}
 ;################################################################
 ReadSnakeQ		PROC	{R0-R13,LR}
 				PUSH	{R0-R3,LR}
-
-				;ToDo
+				
+				LDR R1, =QRecieveRecord      ;Receive the queue
+				LDRB R1, [R0, R0]            ;Load the value into a temp register at the offset of the index
+				STR R1, [R0, #0]             ;store that value into R0
 
 				POP	{R0-R3,PC}
 				ENDP
 ;################################################################
 ;ReadFirstQ -  reads the first byte in a queue without dequeuing it
 ; Input - R0 =QRecord
-; Output - R0 first byte in the queu
+; Output - R0 first byte in the queue
 ;################################################################
 ReadFirstQ		PROC	{R0-R13,LR}
 				PUSH	{R0-R3,LR}
+				
+				LDR R0, =QRecieveRecord      ;Recived the queue
+				LDRB R1, [R0, #0]            ;sends the first byte in the queue to a temp resistor
+				STRB R1, [R0, #0]            ;stores that first byte back into R0
 				
 				POP		{R0-R3,PC}
 				ENDP
