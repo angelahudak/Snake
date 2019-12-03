@@ -21,10 +21,12 @@
 /*********************************************************************/
 /*Global variables*/
 //ARM Global variables
-extern GameOver;
-extern Velocity;
-extern GameLost;
-extern GameWon;
+extern int GameOver;
+extern char Velocity;
+extern int GameLost;
+extern int GameWon;
+extern UInt32 SnakeQYRecord;
+extern UInt32 SnakeQXRecord;
 
 //C Global variables
 int nextX;
@@ -79,7 +81,7 @@ void printChar(char C, int x, int y){
 	PutCharI(C);
 	
 	//restore cursor pos
-	PurtStringI("\033[u", MAX_STRING);
+	PutStringI("\033[u", MAX_STRING);
 	__asm("CPSIE I");
 }
 
@@ -91,9 +93,8 @@ checkFood - checks a given x,y corrdinate to see if it is a valid
 */
 int checkFood(int x, int y){
 	for (int i;snakeLength; i++){
-		if (x == ReadSnakeQ(i, &SnakeQYRecord) && /
-			y == ReadSnakeQ(i, &SnakeQYRecord){
-				return FLASE;}
+		if (x == ReadSnakeQ(i, SnakeQYRecord) && y == ReadSnakeQ(i, SnakeQYRecord)){
+				return FALSE;}
 	}
 	return TRUE;
 }
@@ -106,7 +107,9 @@ spawnFood - randomly spawns a piece of food in valid spot on the
 @returns - null void
 */
 void spawnFood(){
-	int foodValid = FLASE;
+	int foodValid = FALSE;
+	int x;
+	int y;
 	while (!(foodValid)){
 		x = (rand() % (upperLimitX - lowerlimitX + 1)) + lowerlimitX;
 		y = (rand() % (upperLimitY - lowerLimitY + 1)) + lowerLimitY;
@@ -124,8 +127,8 @@ enqueueNewSnakePos - enqueues the headX and headY values into the
 @return(s) - null void
 */
 void enqueueNewSnakePos(){
-	Enqueue(headY, &snakeQYRecord);
-	Enqueue(headX, &snakeQXRecord);	
+	Enqueue(headY, SnakeQYRecord);
+	Enqueue(headX, SnakeQXRecord);	
 }
 
 /*
@@ -137,42 +140,42 @@ nextSpaceValid - tells if the next space will be valid
 */
 int nextSpaceValid(char v){
 	//velocity is up
-	if (v = 'w'){
+	if (v == 'w'){
 		nextY ++;
 		if (nextY == upperLimitY || nextY == lowerLimitY){return FALSE;}
 		for (int i;snakeLength; i++){
-			if (nextX == ReadSnakeQ(i, &SnakeQYRecord) && nextY == ReadSnakeQ(i, &SnakeQYRecord){
-				return FLASE;
+			if (nextX == ReadSnakeQ(i, SnakeQYRecord) && nextY == ReadSnakeQ(i, SnakeQYRecord)){
+				return FALSE;
 			}
 		}
 	}
 	//velcoity if left
-	else if (v = 'a'){
+	else if (v == 'a'){
 		nextX --;
 		if (nextX == lowerlimitX || nextX == upperLimitX){return FALSE;}
 		for (int i;snakeLength; i++){
-			if (nextX == ReadSnakeQ(i, &SnakeQYRecord) && nextY == ReadSnakeQ(i, &SnakeQYRecord){
-				return FLASE;
+			if (nextX == ReadSnakeQ(i, SnakeQYRecord) && nextY == ReadSnakeQ(i, SnakeQYRecord)){
+				return FALSE;
 			}
 		}
 	}
 	//velocity is down
-	else if (v = 's'){
+	else if (v == 's'){
 		nextY --;
 		if (nextY == upperLimitY || nextY == lowerLimitY){return FALSE;}
 		for (int i;snakeLength; i++){
-			if (nextX == ReadSnakeQ(i, &SnakeQYRecord) && nextY == ReadSnakeQ(i, &SnakeQYRecord){
-				return FLASE;
+			if (nextX == ReadSnakeQ(i, SnakeQYRecord) && nextY == ReadSnakeQ(i, SnakeQYRecord)){
+				return FALSE;
 			}
 		}
 	}
 	//velocity is right
-	else if (v = 'd'){
+	else if (v == 'd'){
 		nextX ++;
 		if (nextX == lowerlimitX || nextX == upperLimitX){return FALSE;}
 		for (int i;snakeLength; i++){
-			if (nextX == ReadSnakeQ(i, &SnakeQYRecord) && nextY == ReadSnakeQ(i, &SnakeQYRecord){
-				return FLASE;
+			if (nextX == ReadSnakeQ(i, SnakeQYRecord) && nextY == ReadSnakeQ(i, SnakeQYRecord)){
+				return FALSE;
 			}
 		}
 	}
@@ -201,7 +204,7 @@ void advanceTheSnake(char vel){
 		case 's':
 			headY --;
 			enqueueNewSnakePos();
-			printChar(SNKAE, headX, headY);
+			printChar(SNAKE, headX, headY);
 			break;
 		case 'd':
 			headX ++;
@@ -233,7 +236,7 @@ int main (void){
     for (;;){/*main loop*/
 			//init game local variables
 			char userInput = 'A';
-			GAME_OVER = TRUE;
+			GameOver = TRUE;
 			
 			//prompt user for <enter> key
 			PutStringI("Please edit you PuTTy Terminal Settings:\n", MAX_STRING);										//row 22
@@ -299,10 +302,10 @@ int main (void){
 
 			//enable game control booleans
 			GameActive = TRUE;
-			GAME_OVER = FALSE;
+			GameOver = FALSE;
 			
 			//main game loop
-			while (GAME_OVER == FALSE)
+			while (GameOver == FALSE)
 			
 			//enable normal recieving
 			GameActive = FALSE;
@@ -322,7 +325,7 @@ int main (void){
 			}
 			
 			//game won sequence
-			else if (gameWon == TRUE){
+			else if (GameWon == TRUE){
 				//move cursor for new input
 				PutStringI("\033[<21>;<0>",MAX_STRING);
 				//print failure message
