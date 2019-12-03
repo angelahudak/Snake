@@ -118,6 +118,8 @@ MAX_SNAKE EQU 864
 			EXPORT 	GameOver
 			EXPORT	GameWon
 			EXPORT	GameLost
+			EXPORT	=SnakeQXRecord
+			EXPORT	=SnakeQYRecord
 ;-----------------------------------------------------------------
 			;IMPORTS
 			
@@ -155,6 +157,94 @@ ReadFirstQ		PROC	{R0-R13,LR}
 				PUSH	{R0-R3,LR}
 				
 				POP		{R0-R3,PC}
+				ENDP
+;################################################################
+;INIT_PIT_IRQ - initializes the KL46 to inteerupt every 0.01s from
+;				PIT channel 0
+;Inputs - null
+;Outputs - null
+;modifies - APSR
+;################################################################
+Init_PIT_IRQ	PROC	{R0-R13,LR}
+				PUSH	{R0-R7,LR}
+				
+				;enable clock for PIT module
+				LDR		R0,=SIM_SCGC6
+				LDR		R1,=SIM_SCGC6_PIT_MASK
+				LDR		R2,[R0,#0]
+				ORRS	R2,R2,R1
+				STR		R2,[R0,#0]
+				
+				;Disable PIT Timer 0
+				LDR		R0,=PIT_CH0_BASE
+				LDR		R1,=PIT_TCTRL_TEN_MASK
+				LDR		R2,[R0,#PIT_TCTRL_OFFSET]
+				BICS	R2,R2,R1
+				STR		R2,[R0,#PIT_TCTRL_OFFSET]
+				
+				;Set PIT interrupt priority
+				LDR		R0,=PIT_IPR
+				LDR		R1,=NVIC_IPR_PIT_MASK
+				LDR		R2,[R0,#0]
+				BICS	R2,R2,R1
+				STR		R2,[R0,#0]
+				
+				;clear any pending interrupts
+				LDR		R0,=NVIC_ICPR
+				LDR		R1,=NVIC_ICPR_PIT_MASK
+				STR		R1,[R0,#0]
+				
+				;unmask PIT Interrupts
+				LDR		R0,=NVIC_ISER
+				LDR		R1,=NVIC_ISER_PIT_MASK
+				STR		R1,[R0,#0]
+				
+				;Enable PIT module
+				LDR		R0,=PIT_BASE
+				LDR		R1,=PIT_MCR_EN_FRZ
+				STR		R1,[R0,#PIT_MCR_OFFSET]
+				
+				;Set PIT timer 0 period for 0.01
+				LDR		R0,=PIT_CH0_BASE
+				LDR		R1,=PIT_LDVAL_10ms
+				STR		R1,[R0,#PIT_LDVAL_OFFSET]
+				
+				;enable pit timer 0 interrupt
+				LDR		R2,=PIT_TCTRL_CH_IE
+				STR		R2,[R0,#PIT_TCTRL_OFFSET]
+				
+				;clear PIT channel 0 interrupt
+				;LDR		R1,=PIT_TFLG_TIF_MASK
+				;STR		R1,[R0,#PIT_TFLG_OFFSET]
+				
+				POP		{R0-R7,PC}
+				ENDP
+;################################################################
+;PIT_ISR - ISR for the PIT module
+;Interrupt
+;################################################################
+PIT_IRQHandler	PROC	{R0-R13,LR}
+				PUSH	{R0-R7,LR}
+				
+				CPSID	I					;mask interrupts
+				
+				LDR		R0,=RunStopWatch
+				LDRB	R0,[R0,#0]
+				CMP		R0,#0
+				BEQ		ClearInterrupt		;if (RunStopWatch0
+				
+				LDR		R0,=Count
+				LDR		R1,[R0,#0]
+				ADDS	R1,R1,#1
+				STR		R1,[R0,#0]			;{count++}
+				
+ClearInterrupt	LDR		R0,=PIT_CH0_BASE
+				LDR		R1,=PIT_TFLG_TIF_MASK
+				STR		R1,[R0,#PIT_TFLG_OFFSET];clear PIT channel 0 interrupt
+				
+				CPSIE	I					;unmask interrupts
+				
+				POP		{R0-R7,PC}
 				ENDP
 ;################################################################
 ;UART0_IRQHandler

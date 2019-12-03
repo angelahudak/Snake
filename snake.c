@@ -213,14 +213,14 @@ void advanceTheSnake(char vel){
 			break;
 	}
 	//only adavnce the tail if no food is eaten
-	if (!(nextX == foodX && nextY == foodY){
+	if (!(nextX == foodX && nextY == foodY)){
 		printChar(NOTHING, tailX, tailY);
-		Dequeue(&SnakeQXRecord);
-		Dequeue(&SnakeQYRecord);
-		tailX = ReadFirstQ(&SnakeQXRecord);
-		tailY = ReadFirstQ(&SnakeQYRecord);
+		Dequeue(SnakeQXRecord);
+		Dequeue(SnakeQYRecord);
+		tailX = ReadFirstQ(SnakeQXRecord);
+		tailY = ReadFirstQ(SnakeQYRecord);
 	}
-	else if (nextX == foodX && nextY == foodY) {SnkaeLength ++;}
+	else if (nextX == foodX && nextY == foodY) {snakeLength ++;}
 }
 
 /*********************************************************************/
@@ -275,7 +275,7 @@ int main (void){
 			PutStringI("X                                                X\n", MAX_STRING); 			//row 3
 			PutStringI("X                                                X\n", MAX_STRING); 			//row 2
 			PutStringI("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX\n", MAX_STRING); 			//row 1
-      //				 |_|<-cursor will return here																								//row 0
+			//	   	 |_|<-cursor will return here																								//row 0
 			
 			//set variables
 			Velocity = 'D';
